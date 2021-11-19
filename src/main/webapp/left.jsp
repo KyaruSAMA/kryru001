@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <div class="col-md-2 column" id="left" style="background-color: lightblue">
+
     <ul class="nav nav-pills nav-stacked" style="background-color: lightskyblue">
 
         <li class="${"carList".equals(param.navItem)?"active":""}"><a href="carList">汽车列表</a></li>
