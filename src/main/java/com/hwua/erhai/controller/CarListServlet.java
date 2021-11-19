@@ -95,7 +95,7 @@ public class CarListServlet extends HttpServlet {
 
         }
         //将model数据放入re，之后再jsp中能通过requestScope访问到model数据
-        request.setAttribute("mCars",Cars);
+        request.setAttribute("mCars",mCars);
         //McarSearch用于保存查询的条件，将其按照查询传入的值，填写到搜索表单中
         MCarSearch mCarSearch=new MCarSearch(carId,carBrand,carCategory,priceOrder);
         request.setAttribute("mCarSearch",mCarSearch);

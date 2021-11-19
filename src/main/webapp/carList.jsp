@@ -102,7 +102,7 @@
                             <tr>
                                 <td>${mCar.id}</td>
                                 <td>${mCar.model}</td>
-                                <td>${mCar.comments}</td>
+                                <td>${mCar.coments}</td>
                                 <td>${mCar.brand}</td>
                                 <td>${mCar.category}</td>
                                 <td>${mCar.rent}</td>

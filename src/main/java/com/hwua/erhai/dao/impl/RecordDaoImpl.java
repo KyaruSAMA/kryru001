@@ -126,7 +126,7 @@ public class RecordDaoImpl extends JDBCTemplate implements IRecordDao {
 
     @Override
     public Record queryRecordById(Connection conn, final long id) {
-        Record record = new Record();
+        final Record record = new Record();
         String sql = "SELECT  record.id, car.model,car.rent,car.t_comments,b.name," +
                 " cay.name,record.start_date,record.return_date,record.payment " +
                 "from t_record record ,t_car car ,t_brand b, t_category cay" +
@@ -160,7 +160,7 @@ public class RecordDaoImpl extends JDBCTemplate implements IRecordDao {
 
     @Override
     public Record queryNotReturnRecord(Connection conn, final long userId, final long carId) {
-        Record record = new Record();
+        final Record record = new Record();
         String sql = "select Id,user_id,car_id,start_date,return_date,payment from t_record where (user_Id = ? or car_id = ?) and return_date is null ";
 
         query(conn,sql, new PreparedStatementSetter() {

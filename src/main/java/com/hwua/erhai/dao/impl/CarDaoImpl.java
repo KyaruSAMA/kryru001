@@ -212,7 +212,7 @@ public class CarDaoImpl extends JDBCTemplate implements ICarDao {
 
     @Override
     public Car queryCarById(Connection conn, final long id) {
-        Car car = new Car();
+        final Car car = new Car();
         String sql = "SELECT car.id, b.id, b.name, car.model, cay.id, cay.name,"
                 + "car.t_comments, car.rent,car.status, car.usable "
                 + "FROM t_car car, t_brand b, t_category cay "
