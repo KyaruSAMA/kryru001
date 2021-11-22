@@ -21,7 +21,7 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-@WebServlet(name = "DoAddCarServlet", value = "/DoAddCar")
+@WebServlet(name = "DoAddCarServlet", value = "/doCarAdd")
 public class DoAddCarServlet extends HttpServlet {
     ICarService CarService=new MockCarService();
     //上传文件储存目录

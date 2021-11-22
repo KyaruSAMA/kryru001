@@ -18,7 +18,7 @@
         }
     </style>
 </head>
-<body style="background-image:url('static/images/background.png')">
+<body style="background-image:url('image/111.jpg')">
 <div class="container" id="container" style="width: 100%;">
     <div class="row clearfix" id="head">
         <div class="col-md-12 column" style="line-height:100px;text-align:center;
@@ -36,7 +36,7 @@
                        placeholder="请输入用户名">
             </div>
             <div class="form-group">
-                <label for="password">密码</label>
+                <label for="password">&nbsp;&nbsp;&nbsp;密码</label>
                 <input type="password" class="form-control" id="password" name="password"
                        placeholder="请输入密码">
             </div>
