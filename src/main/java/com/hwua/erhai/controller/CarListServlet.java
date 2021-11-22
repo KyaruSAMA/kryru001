@@ -85,7 +85,7 @@ public class CarListServlet extends HttpServlet {
             MCar mCar=new MCar();
             mCar.setId(String.valueOf(car.getId()));
             mCar.setModel(String.valueOf(car.getModel()));
-            mCar.setComents(String.valueOf(car.getComments()));
+            mCar.setComments(String.valueOf(car.getComments()));
             mCar.setBrand(String.valueOf(car.getBrandName()));
             mCar.setCategory(String.valueOf(car.getCategoryName()));
             mCar.setRent(String.format("%.2f/天",car.getRent()));

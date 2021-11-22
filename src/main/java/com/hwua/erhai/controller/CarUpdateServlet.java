@@ -39,7 +39,7 @@ public class CarUpdateServlet extends HttpServlet {
         mCar.setId(String.valueOf(car.getId()));
         mCar.setModel(String.valueOf(car.getModel()));
         mCar.setColor(String.valueOf(car.getColor()));
-        mCar.setComents(String.valueOf(car.getComments()));
+        mCar.setComments(String.valueOf(car.getComments()));
         mCar.setBrand(String.valueOf(car.getBrandName()));
         mCar.setCategory(String.valueOf(car.getCategoryName()));
         mCar.setPrice(String.valueOf(car.getPrice()));

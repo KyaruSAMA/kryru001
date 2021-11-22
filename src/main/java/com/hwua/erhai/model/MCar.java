@@ -3,7 +3,7 @@ package com.hwua.erhai.model;
 public class MCar {
     private String id;
     private String model;
-    private String coments;
+    private String comments;
     private String brand;
     private String category;
     private String price;
@@ -50,12 +50,12 @@ public class MCar {
         this.model = model;
     }
 
-    public String getComents() {
-        return coments;
+    public String getComments() {
+        return comments;
     }
 
-    public void setComents(String coments) {
-        this.coments = coments;
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 
     public String getBrand() {

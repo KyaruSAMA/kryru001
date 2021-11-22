@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "CarDetailServletServlet", value = "/carDetail")
-public class CarDetailServletServlet extends HttpServlet {
+public class CarDetailServlet extends HttpServlet {
     ICarService carService=new MockCarService();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -37,7 +37,7 @@ String carId=request.getParameter("carId");
         mcar.setId(String.valueOf(car.getId()));
         mcar.setModel(String.valueOf(car.getModel()));
         mcar.setColor(String.valueOf(car.getColor()));
-        mcar.setComents(String.valueOf(car.getComments()));
+        mcar.setComments(String.valueOf(car.getComments()));
         mcar.setCarNumber(String.valueOf(car.getCarNumber()));
         mcar.setBrand(String.valueOf(car.getBrandName()));
         mcar.setCategory(String.valueOf(car.getCategoryName()));
@@ -46,7 +46,7 @@ String carId=request.getParameter("carId");
         mcar.setUsable(car.getUsable()==0?"是":"否");
         mcar.setStatus(car.getStatus()==0?"是":"否");
         mcar.setImagePath(String.format("upload/car_%d.img",car.getId()));
-        request.setAttribute("mcar",mcar);
+        request.setAttribute("mCar",mcar);
         request.getRequestDispatcher("/carDetail.jsp").forward(request,response);
     }
 

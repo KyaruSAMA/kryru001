@@ -27,11 +27,11 @@
         <div class="panel-body">
             <div style="display: flex;flex-direction: row;justify-content: center">
                 <c:if test='${"succeed".equals(sessionScope.result)}'>
-                    <h3 class="text-success">${sessionScope.massage}</h3>
+                    <h3 class="text-success">${sessionScope.message}</h3>
                 </c:if>
 
                 <c:if test='${"failed".equals(sessionScope.result)}'>
-                    <h3 class="text-danger">${sessionScope.massage}</h3>
+                    <h3 class="text-danger">${sessionScope.message}</h3>
                 </c:if>
 
             </div>
