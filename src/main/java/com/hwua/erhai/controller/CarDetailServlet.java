@@ -18,7 +18,7 @@ public class CarDetailServlet extends HttpServlet {
     ICarService carService=new MockCarService();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-String carId=request.getParameter("carId");
+        String carId=request.getParameter("carId");
         List<QueryCondition> queryConditionList=new ArrayList<>();
         queryConditionList.add(new QueryCondition("carId",carId));
         List<Car>carList=carService.queryCars(queryConditionList,1,0);

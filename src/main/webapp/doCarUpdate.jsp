@@ -3,9 +3,9 @@
 <html>
 <head>
     <title>汽车管理</title>
-    <link href="static/web-libs/bootstrap-3.4.1-dist/css/bootstrap.css" type="text/css" rel="stylesheet">
-    <script src="static/web-libs/jquery/jquery-3.6.0.js" type="text/javascript" rel="script"></script>
-    <script src="static/web-libs/bootstrap-3.4.1-dist/js/bootstrap.js" type="text/javascript" rel="script"></script>
+    <link href="static/libs/bootstrap-3.4.1-dist/css/bootstrap.css" type="text/css" rel="stylesheet">
+    <script src="static/libs/jquery/jquery-3.6.0.js" type="text/javascript" rel="script"></script>
+    <script src="static/libs/bootstrap-3.4.1-dist/js/bootstrap.js" type="text/javascript" rel="script"></script>
     <link href="static/css/style.css" type="text/css" rel="stylesheet">
     <style>
         a{
@@ -26,11 +26,11 @@
         <div class="panel-body">
             <div style="display: flex;flex-direction: row;justify-content: center">
                 <c:if test='${"succeed".equals(sessionScope.result)}'>
-                    <h3 class="text-success">${sessionScope.massage}</h3>
+                    <h3 class="text-success">${sessionScope.message}</h3>
                 </c:if>
 
                 <c:if test='${"failed".equals(sessionScope.result)}'>
-                    <h3 class="text-danger">${sessionScope.massage}</h3>
+                    <h3 class="text-danger">${sessionScope.message}</h3>
                 </c:if>
 
             </div>

@@ -9,8 +9,10 @@ import com.hwua.erhai.servlet.query.QueryCondition;
 import java.util.List;
 
 public interface ICarService {
+    int countRecord(List<QueryCondition>conditions);
     int countCars(List<QueryCondition>conditions);
     List<Car>queryCars(List<QueryCondition> conditions,int limit ,int offset);
+    List<Record>queryRecord(List<QueryCondition> conditions,int limit ,int offset);
     /**
      * 查询上架汽车的集合
      *

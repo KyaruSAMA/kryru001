@@ -37,27 +37,27 @@ public class CarListServlet extends HttpServlet {
         //整个baseurl会用于生成分页导航中的a标签的href属性，也就是超链接的值
         //同时，还会生成数据库查询sql的条件清单，也就是queryconditions
         List<String>params=new ArrayList<>();
-        List<QueryCondition> queryConditons=new ArrayList<>();
+        List<QueryCondition> queryCondition=new ArrayList<>();
         if (StringUtils.isNotEmpty(carId)){
             params.add(String.format("carId=%s",carId));
-            queryConditons.add(new QueryCondition("carId",carId));
+            queryCondition.add(new QueryCondition("carId",carId));
         }
         if (StringUtils.isNotEmpty(carBrand)){
             params.add(String.format("carBrand=%s",carBrand));
-            queryConditons.add(new QueryCondition("carBrand",carBrand));
+            queryCondition.add(new QueryCondition("carBrand",carBrand));
         }
         if (StringUtils.isNotEmpty(carCategory)){
             params.add(String.format("carCategory=%s",carCategory));
-            queryConditons.add(new QueryCondition("carCategory",carCategory));
+            queryCondition.add(new QueryCondition("carCategory",carCategory));
         }
         if (StringUtils.isNotEmpty(priceOrder)){
             params.add(String.format("priceOrder=%s",priceOrder));
-            queryConditons.add(new QueryCondition("priceOrder",priceOrder));
+            queryCondition.add(new QueryCondition("priceOrder",priceOrder));
         }
         HttpSession session=request.getSession(false);
         MUser mUser=(MUser)session.getAttribute("mUser");
         if ("普通用户".equals(mUser.getType())){
-            queryConditons.add(new QueryCondition("usable","0"));
+            queryCondition.add(new QueryCondition("usable","0"));
         }
         String queryParams=String.join("&",params);
         String baseUrl="carList";
@@ -69,7 +69,7 @@ public class CarListServlet extends HttpServlet {
         //根据指定的条件，查询符合条件的所有汽车总数
         //相当于select count(*)from t_car where ${queryConditions}
         //获取这个总数的目的，是为了知道分页导航的最大页数是多少，也就是分页导航中尾页的索引号
-        int records=carService.countCars(queryConditons);
+        int records=carService.countCars(queryCondition);
         //根据基准url baseUrl,查询页面所以好可以查看页游的，每页的记录数，总计数数，这4个参数
         //生成需要分页导航的model数据，也就是MPpageNav
         //MpPageNav mpageNav=pogeNavtion
@@ -78,7 +78,7 @@ public class CarListServlet extends HttpServlet {
         request.setAttribute("mPageNav",mPageNav);
         //根据条件查询出来的queryCondition，以及分导航中指定页面需要查询的数据范围，也就是limit和offset参数
         //查询出页面需要的数据
-        List<Car> Cars=carService.queryCars(queryConditons,Integer.parseInt(mPageNav.limit),Integer.parseInt(mPageNav.offset));
+        List<Car> Cars=carService.queryCars(queryCondition,Integer.parseInt(mPageNav.limit),Integer.parseInt(mPageNav.offset));
         List<MCar> mCars=new ArrayList<>(Cars.size());
         for (Car car: Cars
         ) {

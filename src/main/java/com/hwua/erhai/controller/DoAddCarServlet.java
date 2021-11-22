@@ -41,7 +41,7 @@ public class DoAddCarServlet extends HttpServlet {
         if (!ServletFileUpload.isMultipartContent(request)){
             //如果不是则停止
             PrintWriter writer=response.getWriter();
-            writer.println("Error:表单必须包含 enctypemultipart/form-data");
+            writer.println("Error:表单必须包含 enctype=multipart/form-data");
             writer.flush();
             return;
         }

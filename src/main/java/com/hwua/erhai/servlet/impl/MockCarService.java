@@ -110,18 +110,14 @@ return cars;
                 break;
             }else if ("asc".equals(condition.getValue())){
                 result.sort(
-                        new Comparator<Car>() {
-                            @Override
-                            public int compare(Car o1, Car o2) {
-                                return Double.compare(o1.getRent(),o2.getRent());
-                            }
-                        }
+                        Comparator.comparingDouble(Car::getRent)
                 );
                 break;
             }else {
                 result.sort(new Comparator<Car>() {
                     @Override
                     public int compare(Car o1, Car o2) {
+
                         return Double.compare(o2.getRent(),o1.getRent());
                     }
                 });
@@ -132,7 +128,13 @@ return cars;
     }
 
     @Override
+    public int countRecord(List<QueryCondition> conditions) {
+        return 0;
+    }
+
+    @Override
    synchronized public int countCars(List<QueryCondition> conditions) {
+
         return select(CAR_LIST,conditions).size();
     }
 
@@ -154,6 +156,11 @@ return cars;
             toIndex=copyCars.size();
         }
         return copyCars.subList(fromIndex,toIndex);
+    }
+
+    @Override
+    public List<Record> queryRecord(List<QueryCondition> conditions, int limit, int offset) {
+        return null;
     }
 
     @Override
