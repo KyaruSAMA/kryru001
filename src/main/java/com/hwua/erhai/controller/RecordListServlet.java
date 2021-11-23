@@ -3,9 +3,7 @@ package com.hwua.erhai.controller;
 import com.hwua.erhai.common.PageNavUtil;
 import com.hwua.erhai.entity.Car;
 import com.hwua.erhai.entity.Record;
-import com.hwua.erhai.model.MCar;
-import com.hwua.erhai.model.MPageNav;
-import com.hwua.erhai.model.MUser;
+import com.hwua.erhai.model.*;
 import com.hwua.erhai.servlet.ICarService;
 import com.hwua.erhai.servlet.IUserService;
 import com.hwua.erhai.servlet.impl.MockCarService;
@@ -20,7 +18,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet(name = "AdminRecordServlet", value = "/AdminRecordServlet")
+@WebServlet(name = "AdminRecordServlet", value = "/rentList")
 public class RecordListServlet extends HttpServlet {
 ICarService carService= new MockCarService();
 IUserService userService=new MockUserService();
@@ -28,7 +26,7 @@ IUserService userService=new MockUserService();
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //从客户端请求里读取出与汽车查询条件相关的参数
         String carId=request.getParameter("carId");
-        String userId=request.getParameter("userId");
+        String userName=request.getParameter("userId");
 
         String page=request.getParameter("page");
         String pageSize=request.getParameter("pageSize");
@@ -38,11 +36,11 @@ IUserService userService=new MockUserService();
 
         if (StringUtils.isNotEmpty(carId)){params.add(
                 String.format("carId=%s",carId));
-        queryCondition.add(new QueryCondition("carId",carId));
+        queryCondition.add(new QueryCondition("carId",carId));}
 
-            if (StringUtils.isNotEmpty(userId)){
-                params.add(String.format("userId=%s",userId));
-                queryCondition.add(new QueryCondition("userId",userId));
+            if (StringUtils.isNotEmpty(userName)){
+                params.add(String.format("userName=%s",userName));
+                queryCondition.add(new QueryCondition("userName",userName));
             }
             HttpSession session=request.getSession(false);
             MUser mUser=(MUser)session.getAttribute("mUser");
@@ -67,9 +65,33 @@ IUserService userService=new MockUserService();
             //根据条件查询出来的queryCondition，以及分导航中指定页面需要查询的数据范围，也就是limit和offset参数
             //查询出页面需要的数据
             List<Record> recordList=carService.queryRecord(queryCondition,Integer.parseInt(mPageNav.limit),Integer.parseInt(mPageNav.offset));
-            List<MCar> mCars=new ArrayList<>(recordList.size());
+            List<MRecord> mRecords=new ArrayList<>(recordList.size());
+            for (Record record:recordList
+            ) {
+                MRecord mRecord=new MRecord();
+                mRecord.setCarId(String.valueOf(record.getCarId()));
+                mRecord.setUserId(String.valueOf(record.getUserId()));
+                mRecord.setUserName(String.valueOf(record.getUserName()));
+                mRecord.setId(String.valueOf(record.getId()));
+                mRecord.setStartDate(String.valueOf(record.getStartDate()));
+                mRecord.setReturnDate(String.valueOf(record.getReturnDate()));
+                mRecord.setModel(String.valueOf(record.getModel()));
+                mRecord.setBrandName(String.valueOf(record.getBrandName()));
+                mRecord.setCategoryName(String.valueOf(record.getCategoryName()));
+                mRecord.setComments(String.valueOf(record.getComments()));
+                mRecord.setRent(String.format("%.2f/天",record.getRent()));
+                mRecords.add(mRecord);
+            }
+            //将model数据放入re，之后再jsp中能通过requestScope访问到model数据
+            request.setAttribute("mRecords",mRecords);
+            //McarSearch用于保存查询的条件，将其按照查询传入的值，填写到搜索表单中
+            MRecordSearch mRecordSearch=new MRecordSearch(carId,userName);
+            request.setAttribute("mRecordSearch",mRecordSearch);
+            //使用forward方法将M和V结合起来，从而生成动态的html页面，并最终返回给客户端浏览器
+            //这就是完整的Mvc处理张
+            request.getRequestDispatcher("/rentList.jsp").forward(request,response);
         }
-    }
+
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -1,40 +1,43 @@
 package com.hwua.erhai.model;
 
 public class MRecord {
-    private long id;
-    private long userId;
-    private long carId;
+    private String id;
+    private String userId;
+    private String carId;
     private String startDate;
     private String returnDate;
-    private double payment;
-    private double rent;
+    private String payment;
+    private String rent;
     private String model;
     private String comments;
     private String brandName;
     private String categoryName;
     private String userName;
+public MRecord(){
 
-    public long getId() {
+}
+
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public long getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
-    public long getCarId() {
+    public String getCarId() {
         return carId;
     }
 
-    public void setCarId(long carId) {
+    public void setCarId(String carId) {
         this.carId = carId;
     }
 
@@ -54,19 +57,19 @@ public class MRecord {
         this.returnDate = returnDate;
     }
 
-    public double getPayment() {
+    public String getPayment() {
         return payment;
     }
 
-    public void setPayment(double payment) {
+    public void setPayment(String payment) {
         this.payment = payment;
     }
 
-    public double getRent() {
+    public String getRent() {
         return rent;
     }
 
-    public void setRent(double rent) {
+    public void setRent(String rent) {
         this.rent = rent;
     }
 

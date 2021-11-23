@@ -6,7 +6,6 @@ import com.hwua.erhai.entity.Category;
 import com.hwua.erhai.entity.Record;
 import com.hwua.erhai.servlet.ICarService;
 import com.hwua.erhai.servlet.query.QueryCondition;
-import org.checkerframework.checker.units.qual.C;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
@@ -21,8 +20,11 @@ public class MockCarService implements ICarService {
     static private  final List<String>CATEGORY_LIST=
             Arrays.asList("舒适型","越野型","精英型");
     static private final int CAR_COUNT=5;
+    static private final int RECORD_COUNT=5;
     static private final AtomicLong CAR_ID=new AtomicLong(-1);
+    static private final AtomicLong RECORD_ID=new AtomicLong(-1);
     static private final List<Car>CAR_LIST=loadCars();
+    static private final List<Record> RECORD_LIST=loadRecord();
     static private List<Car> loadCars(){
         List<Car> cars=new ArrayList<>();
         for (int i=0;i<CAR_COUNT;i++){
@@ -68,6 +70,62 @@ return cars;
             cars.add(copyCar(c));
         }
         return cars;
+    }
+//    private long id;
+//    private long userId;
+//    private long carId;
+//    private String startDate;
+//    private String returnDate;
+//    private double payment;
+//    private double rent;
+//    private String model;
+//    private String comments;
+//    private String brandName;
+//    private String categoryName;
+//    private String userName;
+    static private List<Record>loadRecord(){
+        List<Record>records=new ArrayList<>();
+        for (int i=0;i<RECORD_COUNT;i++) {
+            Record record = new Record();
+            long id = RECORD_ID.addAndGet(1);
+            record.setId(id);
+            record.setUserId(id);
+            record.setCarId(id);
+            record.setStartDate("2021-05-06");
+            record.setReturnDate("2021-05-07");
+            record.setPayment(200);
+            record.setRent(200);
+            record.setBrandName(BRAND_LIST.get(i%BRAND_LIST.size()));
+            record.setModel(MODEL_LIST.get(i% MODEL_LIST.size()));
+            record.setCategoryName(CATEGORY_LIST.get(i%CATEGORY_LIST.size()));
+            record.setComments("简介：xxx"+i);
+            record.setUserName("admin");
+            records.add(record);
+        }
+        return records;
+    }
+    static private Record copyRecord(Record r){
+        Record record=new Record();
+        record.setId(r.getId());
+        record.setCarId(r.getCarId());
+        record.setUserId(r.getUserId());
+        record.setStartDate(r.getStartDate());
+        record.setReturnDate(r.getReturnDate());
+        record.setPayment(r.getPayment());
+        record.setRent(r.getRent());
+        record.setBrandName(r.getBrandName());
+        record.setModel(r.getModel());
+        record.setCategoryName(r.getCategoryName());
+        record.setComments(r.getComments());
+        record.setUserName(r.getUserName());
+        return record;
+    }
+    static private List<Record> copyRecords(List<Record> recordList){
+        List<Record>records=new ArrayList<>();
+        for (Record r:RECORD_LIST){
+            records.add(copyRecord(r));
+        }
+        return records;
     }
     //select * from carList where CarId="" and CarBrand="" and carCategory="" order by rent desc;
     static private List<Car> select (List<Car>carList,List<QueryCondition> conditions){
@@ -126,10 +184,37 @@ return cars;
     }
     return result;
     }
+    //select * from recordList where CarId="" and userId="" ;
+    static private List<Record> select1 (List<Record>recordList,List<QueryCondition> conditions){
+        List <Record>result=new ArrayList<>();
+        for (Record record:recordList){
+            boolean selected=true;
+            for (QueryCondition condition : conditions) {
+                if ("carId".equals(condition.getField())){
+                    if (!String.valueOf(record.getId()).equals(condition.getValue())){
+                        selected=false;
+                        break;
+                    }
+                }
 
+
+                else if ("userName".equals(condition.getField())){
+                    if (!String.valueOf(record.getUserName()).equals(condition.getValue())){
+                        selected=false;
+                        break;
+                    }
+                }
+            }
+            if (selected){
+                result.add(record);
+            }
+        }
+
+        return result;
+    }
     @Override
     public int countRecord(List<QueryCondition> conditions) {
-        return 0;
+        return select1(RECORD_LIST,conditions).size();
     }
 
     @Override
@@ -141,7 +226,7 @@ return cars;
     @Override
     synchronized public List<Car> queryCars(List<QueryCondition> conditions, int limit, int offset) {
         List<Car>copyCars=copyCars(CAR_LIST);
-        //select * from carList where CarId="" and carBrand="" and car category="" order by rent desc;
+        //select * from recordList where CarId="" and userId="" ;
         copyCars=select(copyCars,conditions);
         if (copyCars.size()==0){
             return copyCars;
@@ -160,8 +245,25 @@ return cars;
 
     @Override
     public List<Record> queryRecord(List<QueryCondition> conditions, int limit, int offset) {
-        return null;
+        List<Record>copyRecords=copyRecords(RECORD_LIST);
+        //select * from carList where CarId="" and carBrand="" and car category="" order by rent desc;
+        copyRecords=select1(copyRecords,conditions);
+        if (copyRecords.size()==0){
+            return copyRecords;
+        }
+        //limit ${limit},${offset}
+        int fromIndex=offset;
+        if (fromIndex>=copyRecords.size()){
+            fromIndex=copyRecords.size()-1;
+        }
+        int toIndex=offset+limit;
+        if (toIndex>copyRecords.size()){
+            toIndex=copyRecords.size();
+        }
+        return copyRecords.subList(fromIndex,toIndex);
     }
+
+
 
     @Override
     public List<Car> queryUsableCars(String type, String value) {
