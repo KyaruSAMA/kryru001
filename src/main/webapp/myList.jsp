@@ -61,7 +61,7 @@
                         </tr>
                         <tr>
                             <td class="table-left">用户名</td>
-                            <td class="table-main">${sessionScope.mUser.userName}</td>
+                            <td class="table-main">${sessionScope.mUser.username}</td>
                         </tr>
                         <tr>
                             <td class="table-left">用户密码</td>

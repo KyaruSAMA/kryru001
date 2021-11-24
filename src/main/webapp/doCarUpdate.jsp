@@ -11,6 +11,23 @@
         a{
             width: 120px;
         }
+        #left {
+            padding: 0;
+        }
+
+        #left ul li {
+            width: 100%;
+        }
+
+        #left ul li a {
+            font-size: large;
+            letter-spacing: 5px;
+            border-radius: 0;
+            border: 1px solid white;
+        }
+        #main a,#main a:hover,#main a:focus,#main a:visited,#main a:active{
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>

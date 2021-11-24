@@ -19,6 +19,8 @@ public interface IUserService {
      */
     User login(String userName, String password,
                int type);
+    User addAndReturnUser(User user);
+    User updateAndReturnUser(User user);
     User login(String userName, String password);
     /**
      * 注册业务
@@ -28,6 +30,6 @@ public interface IUserService {
      */
     boolean register(User user);
     User updateAndReturnCar(User user);
-    User deleteCar(long userId);
+    User deleteUser(long userId);
 
 }

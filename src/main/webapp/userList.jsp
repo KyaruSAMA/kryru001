@@ -57,15 +57,15 @@
                         <div class="form-group" style="margin-left: 10px">
                             <label for="userType">用户角色</label>
                             <select class="form-control" id="userType" name="userType">
-                                <option value="allRole"
-                                ${"allRole".equals(requestScope.mUserSearch.type)?"selected" : ""}>全部
+                                <option value=""
+                                ${"全部".equals(requestScope.mUserSearch.type)?"selected" : ""}>全部
                                 </option>
-                                <option value="admin"
-                                ${"admin".equals(requestScope.mUserSearch.type)?"selected" : ""}>
+                                <option value="1"
+                                ${"管理员".equals(requestScope.mUserSearch.type)?"selected" : ""}>
                                     管理员
                                 </option>
-                                <option value="user"
-                                ${"user".equals(requestScope.mUserSearch.type)?"selected" : ""}>
+                                <option value="0"
+                                ${"普通用户".equals(requestScope.mUserSearch.type)?"selected" : ""}>
                                     普通用户
                                 </option>
                             </select>
@@ -109,11 +109,11 @@
                                 <td>${mUser.id}</td>
                                 <td>${mUser.username}</td>
                                 <td>${mUser.password}</td>
-                                <td>${mUser.sex}</td>
+                                <td>${"0".equals(mUser.sex)?"男":"女"}</td>
                                 <td>${mUser.idNumber}</td>
                                 <td>${mUser.tel}</td>
                                 <td>${mUser.addr}</td>
-                                <td>${mUser.type}</td>
+                                <td>${"1".equals(mUser.type)?"管理员":"普通用户"}</td>
                                 <td>${mUser.imagePath}</td>
                                 <td><a href="userUpdate?userId=${mUser.id}">修改</a></td>
                                 <td>

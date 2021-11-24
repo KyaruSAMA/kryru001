@@ -24,7 +24,7 @@ public class UserListServlet extends HttpServlet {
         //从客户端请求里读取出与汽车查询条件相关的参数
         String userId=request.getParameter("userId");
         String userName=request.getParameter("userName");
-        String type=request.getParameter("type");
+        String type=request.getParameter("userType");
 //从客户端请求里读取出分页相关的内容。其中：
         //page代表查询的是第几个分页，从1开始
         //pageSize代表的是每个分页的记录行数

@@ -1,12 +1,13 @@
 package com.hwua.erhai.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Preconditions;
 import com.hwua.erhai.entity.Car;
+import com.hwua.erhai.entity.User;
 import com.hwua.erhai.servlet.ICarService;
+import com.hwua.erhai.servlet.IUserService;
 import com.hwua.erhai.servlet.impl.MockCarService;
+import com.hwua.erhai.servlet.impl.MockUserService;
 import com.hwua.erhai.servlet.query.QueryCondition;
-import com.hwua.erhai.vo.DoCarUpdateUsableResponse;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -23,9 +24,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@WebServlet(name = "DoCarUpdateServlet", value = "/doCarUpdate")
-public class DoCarUpdateServlet extends HttpServlet {
-    ICarService CarService=new MockCarService();
+@WebServlet(name = "DoUserUpdateServlet", value = "/doUserUpdate")
+public class DoUserUpdateServlet extends HttpServlet {
+    IUserService iUserService=new MockUserService();
     //上传文件储存目录
     private static final String UpLOAD_DIRECTORY="upload";
     //上传配置
@@ -85,66 +86,58 @@ public class DoCarUpdateServlet extends HttpServlet {
                     fileItemMap.put(item.getFieldName(),item);
                 }
             }
-            String carId=fileItemMap.get("carId").getString("UTF-8");
-            Preconditions.checkArgument(StringUtils.isNotBlank(carId),"汽车编号不能为空");
-            String brand =fileItemMap.get("brand").getString("UTF-8");
-            Preconditions.checkArgument(StringUtils.isNotBlank(brand),"品牌不能为空");
+            String userId=fileItemMap.get("userId").getString("UTF-8");
+            Preconditions.checkArgument(StringUtils.isNotBlank(userId),"用户id不能为空");
+            String userName =fileItemMap.get("username").getString("UTF-8");
+            Preconditions.checkArgument(StringUtils.isNotBlank(userName),"用户名不能为空");
 
-            String category =fileItemMap.get("category").getString("UTF-8");
-            Preconditions.checkArgument(StringUtils.isNotBlank(category),"类型不能为空");
+            String password =fileItemMap.get("password").getString("UTF-8");
+            Preconditions.checkArgument(StringUtils.isNotBlank(password),"密码不能为空");
 
-            String model =fileItemMap.get("model").getString("UTF-8");
-            Preconditions.checkArgument(StringUtils.isNotBlank(model),"型号不能为空");
+            String sex =fileItemMap.get("sex").getString("UTF-8");
+            Preconditions.checkArgument(StringUtils.isNotBlank(sex),"性别不能为空");
 
-            String carNumber =fileItemMap.get("carNumber").getString("UTF-8");
-            Preconditions.checkArgument(StringUtils.isNotBlank(carNumber),"车牌号不能为空");
-            String comments =fileItemMap.get("comments").getString("UTF-8");
-            Preconditions.checkArgument(StringUtils.isNotBlank(comments),"简介不能为空");
-            String color =fileItemMap.get("color").getString("UTF-8");
-            Preconditions.checkArgument(StringUtils.isNotBlank(color),"颜色不能为空");
+            String idNumber =fileItemMap.get("idNumber").getString("UTF-8");
+            Preconditions.checkArgument(StringUtils.isNotBlank(idNumber),"身份证号不能为空");
+            String tel =fileItemMap.get("tel").getString("UTF-8");
+            Preconditions.checkArgument(StringUtils.isNotBlank(tel),"电话不能为空");
+            String addr =fileItemMap.get("addr").getString("UTF-8");
+            Preconditions.checkArgument(StringUtils.isNotBlank(addr),"地址不能为空");
 
-            String price=fileItemMap.get("price").getString("UTF-8");
-            Preconditions.checkArgument(StringUtils.isNotBlank(price),"价格不能为空");
-            String rent =fileItemMap.get("rent").getString("UTF-8");
-            Preconditions.checkArgument(StringUtils.isNotBlank(rent),"租金不能为空");
-
-            String usable
-                    =fileItemMap.get("usable")==null?"":
-                    fileItemMap.get("usable").getString("UTF-8");
+            String type
+                    =fileItemMap.get("type")==null?"":
+                    fileItemMap.get("type").getString("UTF-8");
             List<QueryCondition>queryConditionList=new ArrayList<>() ;
-            queryConditionList.add(new QueryCondition("carId",carId));
-            List<Car> carList= CarService.queryCars(queryConditionList,1,0);
-            if (carList==null||carList.size()==0){
-                request.setAttribute("message","找不到该汽车");
-                request.getRequestDispatcher("/carFoundError.jsp").forward(request,response);
+            queryConditionList.add(new QueryCondition("userId",userId));
+            List<User> userList= iUserService.queryUser(queryConditionList,1,0);
+            if (userList==null||userList.size()==0){
+                request.setAttribute("message","找不到该用户");
+                request.getRequestDispatcher("/userFoundError.jsp").forward(request,response);
                 return;
             }
-            if (carList.size()>1){
-                request.setAttribute("message","找到多辆汽车");
-                request.getRequestDispatcher("/carFoundError.jsp").forward(request,response);
+            if (userList.size()>1){
+                request.setAttribute("message","找到多个用户");
+                request.getRequestDispatcher("/userFoundError.jsp").forward(request,response);
                 return;
             }
-            Car car = carList.get(0);
+           User user=userList.get(0);
 
-            car.setCarNumber(carNumber);
-            car.setBrandId(-1);
-            car.setBrandName(brand);
-            car.setModel(model);
-            car.setColor(color);
-            car.setCategoryId(-1);
-            car.setCategoryName(category);
-            car.setComments(comments);
-            car.setPrice(Double.parseDouble(price));
-            car.setRent(Double.parseDouble(rent));
-            car.setStatus(0);
-            car.setUsable("on".equals(usable)?0:1);
-            Car newCar= CarService.updateAndReturnCar(car);
-            if (newCar==null){
-                throw new Exception("修改汽车失败");
+            user.setUserName(userName);
+            user.setPassword(password);
+            user.setSex(Integer.parseInt(sex));
+            user.setTel(tel);
+            user.setIdNumber(idNumber);
+            user.setAddr(addr);
+            user.setType("管理员".equals(type)?1:0);
+
+
+            User newUser= iUserService.updateAndReturnUser(user);
+            if (newUser==null){
+                throw new Exception("修改用户失败");
             }else{
                 FileItem imageItem=fileItemMap.get("image");
                 if (imageItem.getSize()>0){
-                    long id= newCar.getId();
+                    long id= newUser.getId();
                     String filename=String.format("car_%d.img",id);
                     String filePath=uploadPath+File.separator+filename;
                     File storeFile=new File(filePath);
@@ -155,15 +148,14 @@ public class DoCarUpdateServlet extends HttpServlet {
                 }
             }
             session.setAttribute("result","succeed");
-            session.setAttribute("message","修改汽车成功");
+            session.setAttribute("message","修改用户成功");
         } catch (Exception ex) {
             session.setAttribute("result","failed");
-            session.setAttribute("message","修改汽车失败，错误信息："+ex.getMessage());
+            session.setAttribute("message","修改用户失败，错误信息："+ex.getMessage());
         }
         //跳转到message.jsp
 //        request.getServletContext().getRequestDispatcher("/doCarAdd.jsp").forward(request,response);
 //response.sendRedirect(String.format("doCarAdd.jsp?result=%s",result));
-        response.sendRedirect("doCarUpdate.jsp");
+        response.sendRedirect("doUserUpdate.jsp");
     }
-
 }

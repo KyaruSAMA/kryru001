@@ -336,6 +336,7 @@ return cars;
    synchronized public Car updateAndReturnCar(Car car) {
         for (Car c:CAR_LIST){
             if (c.getId()==car.getId()){
+
                 c.setCarNumber(car.getCarNumber());
                 c.setBrandId(car.getBrandId());
                 c.setBrandName(car.getBrandName());

@@ -109,6 +109,47 @@ public class MockUserService implements IUserService {
     }
 
     @Override
+    public User addAndReturnUser(User user) {
+        if (user.getId()==-1){
+            long id=User_ID.addAndGet(1);
+           user.setId(id);
+        }
+        boolean exist =false;
+        for (User u:USER_TABLE){
+            if (u.getId()==user.getId()){
+                exist=true;
+                break;
+            }
+        }
+        if (exist){
+            throw new RuntimeException(String.format("user id[%d] 已存在",user.getId()));
+        }
+        //TODO:brandId和categoryId需要通过分别根据brandname和categoryname从数据库里查询得到。
+        //之后将这两个id设置到car对象里即可
+        USER_TABLE.add(copyUser(user));
+        return user;
+    }
+
+    @Override
+    public User updateAndReturnUser(User user) {
+        for (User u:USER_TABLE){
+            if (u.getId()==user.getId()){
+
+                u.setUserName(user.getUserName());
+                u.setPassword(user.getPassword());
+                u.setSex(user.getSex());
+                u.setIdNumber(user.getIdNumber());
+                u.setTel(user.getTel());
+                u.setAddr(user.getAddr());
+                u.setType(user.getType());
+                return copyUser(u);
+            }
+        }
+        return  null;
+    }
+
+
+    @Override
     public User login(String userName, String password) {
         for (User user :USER_TABLE
         ) {
@@ -130,7 +171,17 @@ public class MockUserService implements IUserService {
     }
 
     @Override
-    public User deleteCar(long userId) {
-        return null;
+    public User deleteUser(long userId) {
+        int carIndex=-1;
+        for (int i=0;i<USER_TABLE.size();i++){
+            if (USER_TABLE.get(i).getId()==userId){
+                carIndex=i;
+                break;
+            }
+        }
+        if (carIndex==-1){
+            return null;
+        }
+        return copyUser(USER_TABLE.remove(carIndex));
     }
 }
