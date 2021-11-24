@@ -99,7 +99,7 @@ return cars;
             record.setModel(MODEL_LIST.get(i% MODEL_LIST.size()));
             record.setCategoryName(CATEGORY_LIST.get(i%CATEGORY_LIST.size()));
             record.setComments("简介：xxx"+i);
-            record.setUserName("admin");
+            record.setUserName("zhangsan");
             records.add(record);
         }
         return records;
@@ -163,7 +163,7 @@ return cars;
         }
     }
     for (QueryCondition condition:conditions){
-        if ("priveOrder".equals(condition.getField())){
+        if ("priceOrder".equals(condition.getField())){
             if ("unordered".equals(condition.getValue())){
                 break;
             }else if ("asc".equals(condition.getValue())){

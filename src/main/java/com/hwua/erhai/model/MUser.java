@@ -8,6 +8,19 @@ public class MUser {
     private String idNumber;
     private String tel;
     private String addr;
+    private String ImagePath;
+
+    public MUser(String imagePath) {
+        ImagePath = imagePath;
+    }
+
+    public String getImagePath() {
+        return ImagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        ImagePath = imagePath;
+    }
 
     public MUser(){
 

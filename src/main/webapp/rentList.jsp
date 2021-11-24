@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <title>记录列表</title>
@@ -48,19 +49,20 @@
             <div class="row clearfix">
                 <div class="col-md-12 column" id="search" style="background-color: lightskyblue;
                         height: 50px;display: flex;flex-direction: column;justify-content: center">
-                    <form class="form-inline" role="form" action="carList" method="get"
+                    <form class="form-inline" role="form" action="rentList" method="get"
                           style="margin: 0;display: flex;justify-content: flex-end">
                         <div class="form-group">
                             <label for="carId">汽车编号</label>
                             <input class="form-control" id="carId" type="text" name="carId" style="width: 140px"
                                    placeholder="按汽车编号搜索" value="${requestScope.mRecordSearch.carId}">
                         </div>&nbsp;
+<c:if test='${"管理员".equals(sessionScope.mUser.type)}'>
                         <div class="form-group" style="margin-left: 10px">
                             <label for="userName">用户名称</label>
                             <input class="form-control" id="userName" type="text" name="userName" style="width: 140px"
                                    placeholder="按用户名称搜索" value="${requestScope.mRecordSearch.userName}">
                         </div>&nbsp;
-                        &nbsp;
+    &nbsp;</c:if>
                         <button id="resetButton" class="btn btn-default" type="reset"
                                 style="margin-left: 10px">重置
                         </button>
@@ -85,9 +87,11 @@
                             <th>类型</th>
                             <th>每日租金</th>
                             <th>详情</th>
+                            <th>还车</th>
                         </tr>
                         </thead>
                         <tbody>
+<c:if test='${"管理员".equals(sessionScope.mUser.type)}'>
                         <c:forEach var="mRecord" items="${requestScope.mRecords}">
                             <tr>
                                 <td>${mRecord.id}</td>
@@ -98,8 +102,27 @@
                                 <td>${mRecord.brandName}</td>
                                 <td>${mRecord.categoryName}</td>
                                 <td>${mRecord.rent}</td>
-                                <td><a href="carDetail?carId=${mCar.id}">详情</a></td>
+                                <td><a href="carDetail?carId=${mRecord.carId}">详情</a></td>
+                                <td><a href="doReturnCar?carId=${mRecord.carId}">还车</a></td>
+                                </tr>
                         </c:forEach>
+</c:if>
+<c:if test='${"普通用户".equals(sessionScope.mUser.type)}'>
+<c:forEach var="mRecord" items="${requestScope.usermRecords}">
+    <tr>
+        <td>${mRecord.id}</td>
+        <td>${mRecord.userName}</td>
+        <td>${mRecord.carId}</td>
+        <td>${mRecord.model}</td>
+        <td>${mRecord.comments}</td>
+        <td>${mRecord.brandName}</td>
+        <td>${mRecord.categoryName}</td>
+        <td>${mRecord.rent}</td>
+        <td><a href="carDetail?carId=${mRecord.carId}">详情</a></td>
+        <td><a href="doReturnCar?carId=${mRecord.carId}">还车</a></td>
+    </tr>
+</c:forEach>
+</c:if>
                         </tbody>
                     </table>
                     <div style="display: flex;justify-content: center;font-size: 12px;">

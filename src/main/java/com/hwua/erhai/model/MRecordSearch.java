@@ -8,8 +8,8 @@ public class MRecordSearch {
     }
 
     public MRecordSearch(String carId, String userName) {
-        this.carId = carId;
-        this.userName = userName;
+        this.carId = carId==null?"":carId;
+        this.userName = userName==null?"":userName;
     }
 
     public String getCarId() {

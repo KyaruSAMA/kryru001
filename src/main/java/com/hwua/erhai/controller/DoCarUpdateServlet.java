@@ -125,22 +125,22 @@ public class DoCarUpdateServlet extends HttpServlet {
                 return;
             }
             Car car = new Car();
-            car.setId(-1);
+
             car.setCarNumber(carNumber);
-            car.setBrandId(-1);
+
             car.setBrandName(brand);
             car.setModel(model);
             car.setColor(color);
-            car.setCategoryId(-1);
+
             car.setCategoryName(category);
             car.setComments(comments);
             car.setPrice(Double.parseDouble(price));
             car.setRent(Double.parseDouble(rent));
             car.setStatus(0);
             car.setUsable("on".equals(usable)?0:1);
-            Car newCar= CarService.addAndReturnCar(car);
+            Car newCar= CarService.updateAndReturnCar(car);
             if (newCar==null){
-                throw new Exception("新增汽车失败");
+                throw new Exception("修改汽车失败");
             }else{
                 FileItem imageItem=fileItemMap.get("image");
                 if (imageItem.getSize()>0){

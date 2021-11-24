@@ -1,8 +1,12 @@
 package com.hwua.erhai.servlet.impl;
 
+import com.hwua.erhai.entity.Car;
+import com.hwua.erhai.entity.Record;
 import com.hwua.erhai.entity.User;
 import com.hwua.erhai.servlet.IUserService;
+import com.hwua.erhai.servlet.query.QueryCondition;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
@@ -15,7 +19,7 @@ public class MockUserService implements IUserService {
             new User(User_ID.addAndGet(1),"zhangsan","123456",0,
                     "500004198901010100","13012345678","广西北海",1),
             new User(User_ID.addAndGet(1),"aa","123",0,
-                    "600004198901010100","15012345678","广西北海",1)
+                    "600004198901010100","15012345678","广西北海",0)
     );
     private static User copyUser(User user){
         if (user==null){
@@ -32,6 +36,73 @@ public class MockUserService implements IUserService {
         newUser.setType(user.getType());
         return newUser;
     }
+    static private List<User>copyUsers(List<User> userList){
+        List<User>users=new ArrayList<>();
+        for (User u:USER_TABLE){
+            users.add(copyUser(u));
+        }
+        return users;
+    }
+    static private List<User> select (List<User>userList, List<QueryCondition> conditions){
+        List <User>result=new ArrayList<>();
+        for (User user:userList){
+            boolean selected=true;
+            for (QueryCondition condition : conditions) {
+                if ("userId".equals(condition.getField())){
+                    if (!String.valueOf(user.getId()).equals(condition.getValue())){
+                        selected=false;
+                        break;
+                    }
+                }
+
+
+                else if ("userName".equals(condition.getField())){
+                    if (!String.valueOf(user.getUserName()).equals(condition.getValue())){
+                        selected=false;
+                        break;
+                    }
+                }
+                else if ("Type".equals(condition.getField())){
+                    if (!String.valueOf(user.getType()).equals(condition.getValue())){
+                        selected=false;
+                        break;
+                    }
+                }
+            }
+            if (selected){
+                result.add(user);
+            }
+        }
+
+        return result;
+    }
+    @Override
+    public int countUser(List<QueryCondition> conditions) {
+        return select(USER_TABLE,conditions).size();
+    }
+
+    @Override
+    public List<User> queryUser(List<QueryCondition> conditions, int limit, int offset) {
+        List<User>copyUsers=copyUsers(USER_TABLE);
+        //select * from recordList where CarId="" and userId="" ;
+        copyUsers=select(copyUsers,conditions);
+        if (copyUsers.size()==0){
+            return copyUsers;
+        }
+        //limit ${limit},${offset}
+        int fromIndex=offset;
+        if (fromIndex>=copyUsers.size()){
+            fromIndex=copyUsers.size()-1;
+        }
+        int toIndex=offset+limit;
+        if (toIndex>copyUsers.size()){
+            toIndex=copyUsers.size();
+        }
+        return copyUsers.subList(fromIndex,toIndex);
+    }
+
+
+
     @Override
     public User login(String userName, String password, int type) {
         return null;
@@ -51,5 +122,15 @@ public class MockUserService implements IUserService {
     @Override
     public boolean register(User user) {
         return false;
+    }
+
+    @Override
+    public User updateAndReturnCar(User user) {
+        return null;
+    }
+
+    @Override
+    public User deleteCar(long userId) {
+        return null;
     }
 }

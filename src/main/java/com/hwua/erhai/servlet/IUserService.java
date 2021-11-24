@@ -1,8 +1,14 @@
 package com.hwua.erhai.servlet;
 
+import com.hwua.erhai.entity.Car;
 import com.hwua.erhai.entity.User;
+import com.hwua.erhai.servlet.query.QueryCondition;
+
+import java.util.List;
 
 public interface IUserService {
+    int countUser(List<QueryCondition>conditions);
+    List<User>queryUser(List<QueryCondition> conditions, int limit , int offset);
     /**
      * 登录业务
      *
@@ -21,6 +27,7 @@ public interface IUserService {
      * @return 是否注册成功 true:成功  false:失败
      */
     boolean register(User user);
-
+    User updateAndReturnCar(User user);
+    User deleteCar(long userId);
 
 }
