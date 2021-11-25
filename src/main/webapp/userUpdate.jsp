@@ -93,6 +93,9 @@
                             </div>
                             <input type="file" id="image" name="image">
                         </div>
+
+
+
                         <div class="form-group">
                             <label for="type">角色(用户类型)</label>
                             <div class="radio" id="type">

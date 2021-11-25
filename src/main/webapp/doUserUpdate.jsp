@@ -51,11 +51,22 @@
                 </c:if>
 
             </div>
+<c:choose>
+    <c:when test='${"管理员".equals(sessionScope.mUser.type)}'>
             <div style="display: flex;flex-direction: row;justify-content: flex-end;margin-top: 20px">
                 <a href="userList" class="btn btn-primary" role="button" style="margin-left: 20px">
                     返回用户列表
                 </a>
             </div>
+    </c:when>
+    <c:when test='${"普通用户".equals(sessionScope.mUser.type)}'>
+        <div style="display: flex;flex-direction: row;justify-content: flex-end;margin-top: 20px">
+        <a href="myList" class="btn btn-primary" role="button" style="margin-left: 20px">
+        返回我的账户
+        </a>
+        </div>
+    </c:when>
+</c:choose>
         </div>
     </div>
 
