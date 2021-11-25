@@ -41,7 +41,7 @@ public class MyListServlet extends HttpServlet {
         params.add(String.format("userName=%s",userName));
         queryCondition.add(new QueryCondition("userName",mUser.getUsername()));
             String queryParams=String.join("&",params);
-            String baseUrl="carList";
+            String baseUrl="userList";
             if (StringUtils.isNotEmpty(queryParams)){
                 baseUrl=baseUrl+"?"+queryParams;
             }
@@ -72,6 +72,7 @@ public class MyListServlet extends HttpServlet {
                 user1.setIdNumber(String.valueOf(user.getIdNumber()));
                 user1.setAddr(String.valueOf(user.getAddr()));
                 user1.setType(String.valueOf(user.getType()));
+                mUser.setImagePath(String.format("upload/user_%d.img",user.getId()));
                 mUsers.add(user1);
 
             }

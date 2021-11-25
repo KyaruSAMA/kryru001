@@ -99,7 +99,7 @@
                             <th>地址</th>
                             <th>角色(账户类型)</th>
                             <th>照片</th>
-                            <th>详情</th>
+                            <th>修改</th>
                             <th>删除</th>
                         </tr>
                         </thead>
@@ -114,7 +114,12 @@
                                 <td>${mUser.tel}</td>
                                 <td>${mUser.addr}</td>
                                 <td>${"1".equals(mUser.type)?"管理员":"普通用户"}</td>
-                                <td>${mUser.imagePath}</td>
+                                <td><div>
+                                    <img class="img-rounded" id="imagePreview"
+                                         src="${mUser.imagePath}"
+                                         alt="无图片"
+                                         style="width: 20px;height: 40px;margin-bottom: 5px">
+                                </div></td>
                                 <td><a href="userUpdate?userId=${mUser.id}">修改</a></td>
                                 <td>
                                     <a href="javascript:void(0)" class="user-delete-field"

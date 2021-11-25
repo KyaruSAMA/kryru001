@@ -96,7 +96,10 @@
                         </tr>
                         </tbody>
                     </table>
+
                     <div style="display: flex;justify-content: center">
+                        <a href="userUpdate?userId=${sessionScope.mUser.id}" class="btn btn-danger" role="button">修改信息</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <a href="exit" class="btn btn-danger" role="button">退出登录</a>
                     </div>
                 </div>

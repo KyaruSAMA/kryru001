@@ -122,7 +122,7 @@ public class MockUserService implements IUserService {
             if (u.getId()==user.getId()){
                 exist=true;
                 break;
-            }else if (u.getUserName()==user.getUserName()){
+            }else if (u.getUserName().equals(user.getUserName())){
                 exist1=true;
                 break;
             }

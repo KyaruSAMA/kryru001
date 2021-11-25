@@ -112,12 +112,12 @@ public class DoAddUserServlet extends HttpServlet {
             user.setType("管理员".equals(type)?1:0);
             User newUser= userService.addAndReturnUser(user);
             if (newUser==null){
-                throw new Exception("修改用户失败");
+                throw new Exception("新增用户失败");
             }else{
                 FileItem imageItem=fileItemMap.get("image");
                 if (imageItem.getSize()>0){
                     long id= newUser.getId();
-                    String filename=String.format("car_%d.img",id);
+                    String filename=String.format("user_%d.img",id);
                     String filePath=uploadPath+File.separator+filename;
                     File storeFile=new File(filePath);
                     //在控制台输入文件的上传路径
@@ -127,7 +127,7 @@ public class DoAddUserServlet extends HttpServlet {
                 }
             }
             session.setAttribute("result","succeed");
-            session.setAttribute("message","修改用户成功");
+            session.setAttribute("message","新增用户成功");
         } catch (Exception ex) {
             session.setAttribute("result","failed");
             session.setAttribute("message","新增用户失败，错误信息："+ex.getMessage());

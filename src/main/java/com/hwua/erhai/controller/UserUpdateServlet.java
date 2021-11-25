@@ -45,7 +45,7 @@ public class UserUpdateServlet extends HttpServlet {
         mUser.setIdNumber(String.valueOf(user.getIdNumber()));
         mUser.setTel(String.valueOf(user.getTel()));
         mUser.setAddr(String.valueOf(user.getAddr()));
-        mUser.setImagePath(String.format("upload/car_%d.img",user.getId()));
+        mUser.setImagePath(String.format("upload/user_%d.img",user.getId()));
 
         request.setAttribute("mUser",mUser);
 

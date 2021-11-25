@@ -80,6 +80,7 @@ public class UserListServlet extends HttpServlet {
            mUser.setIdNumber(String.valueOf(user.getIdNumber()));
            mUser.setAddr(String.valueOf(user.getAddr()));
            mUser.setType(String.valueOf(user.getType()));
+            mUser.setImagePath(String.format("upload/user_%d.img",user.getId()));
             mUsers.add(mUser);
 
         }

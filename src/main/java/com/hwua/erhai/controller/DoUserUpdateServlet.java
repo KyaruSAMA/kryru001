@@ -138,7 +138,7 @@ public class DoUserUpdateServlet extends HttpServlet {
                 FileItem imageItem=fileItemMap.get("image");
                 if (imageItem.getSize()>0){
                     long id= newUser.getId();
-                    String filename=String.format("car_%d.img",id);
+                    String filename=String.format("user_%d.img",id);
                     String filePath=uploadPath+File.separator+filename;
                     File storeFile=new File(filePath);
                     //在控制台输入文件的上传路径
