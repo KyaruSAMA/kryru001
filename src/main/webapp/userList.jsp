@@ -77,7 +77,7 @@
                                 style="margin-left: 10px">搜索
                         </button>
                         <div class="form-group">
-                            <a href="userManage" class="btn btn-default" role="button"
+                            <a href="userAdd" class="btn btn-default" role="button"
                                style="margin-left: 10px;display: flex;flex-direction:column;justify-content: center">
                                 <span style="display: block;text-align: center">新增</span></a>
                         </div>

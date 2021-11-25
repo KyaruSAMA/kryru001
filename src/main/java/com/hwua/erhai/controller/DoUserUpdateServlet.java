@@ -104,9 +104,9 @@ public class DoUserUpdateServlet extends HttpServlet {
             String addr =fileItemMap.get("addr").getString("UTF-8");
             Preconditions.checkArgument(StringUtils.isNotBlank(addr),"地址不能为空");
 
-            String type
-                    =fileItemMap.get("type")==null?"":
-                    fileItemMap.get("type").getString("UTF-8");
+            String type = fileItemMap.get("type").getString("UTF-8");
+            Preconditions.checkArgument(StringUtils.isNotBlank(type), "角色不能为空");
+
             List<QueryCondition>queryConditionList=new ArrayList<>() ;
             queryConditionList.add(new QueryCondition("userId",userId));
             List<User> userList= iUserService.queryUser(queryConditionList,1,0);

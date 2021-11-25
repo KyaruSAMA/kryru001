@@ -21,6 +21,8 @@ public class MockUserService implements IUserService {
             new User(User_ID.addAndGet(1),"aa","123",0,
                     "600004198901010100","15012345678","广西北海",0)
     );
+    private static final  List<User> USER_LIST=new ArrayList<>(USER_TABLE);
+
     private static User copyUser(User user){
         if (user==null){
             return null;
@@ -38,7 +40,7 @@ public class MockUserService implements IUserService {
     }
     static private List<User>copyUsers(List<User> userList){
         List<User>users=new ArrayList<>();
-        for (User u:USER_TABLE){
+        for (User u:USER_LIST){
             users.add(copyUser(u));
         }
         return users;
@@ -78,7 +80,7 @@ public class MockUserService implements IUserService {
     }
     @Override
     public int countUser(List<QueryCondition> conditions) {
-        return select(USER_TABLE,conditions).size();
+        return select(USER_LIST,conditions).size();
     }
 
     @Override
@@ -115,24 +117,30 @@ public class MockUserService implements IUserService {
            user.setId(id);
         }
         boolean exist =false;
-        for (User u:USER_TABLE){
+        boolean exist1=false;
+        for (User u:USER_LIST){
             if (u.getId()==user.getId()){
                 exist=true;
+                break;
+            }else if (u.getUserName()==user.getUserName()){
+                exist1=true;
                 break;
             }
         }
         if (exist){
             throw new RuntimeException(String.format("user id[%d] 已存在",user.getId()));
+        }if (exist1){
+            throw new RuntimeException(String.format("username[%s] 已存在",user.getId()));
         }
         //TODO:brandId和categoryId需要通过分别根据brandname和categoryname从数据库里查询得到。
         //之后将这两个id设置到car对象里即可
-        USER_TABLE.add(copyUser(user));
+        USER_LIST.add(copyUser(user));
         return user;
     }
 
     @Override
     public User updateAndReturnUser(User user) {
-        for (User u:USER_TABLE){
+        for (User u:USER_LIST){
             if (u.getId()==user.getId()){
 
                 u.setUserName(user.getUserName());
