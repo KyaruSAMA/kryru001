@@ -10,7 +10,7 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 
-@WebServlet(name = "DologinServlet", value = "/doLogin")
+@WebServlet(name = "LoginServlet", value = "/doLogin")
 public class DologinServlet extends HttpServlet {
     IUserService userService=new MockUserService();
     @Override
