@@ -170,7 +170,7 @@
                 <div class="modal-body">
                     <!-- 隐藏需要删除的id -->
                     <input type="hidden" id="deleteUserId"/>
-                    <p>您确认要删除该汽车吗？</p>
+                    <p>您确认要删除该用户吗？</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default"
@@ -237,6 +237,7 @@
                     $("[data-erhai-delete-user-id=" + response.userId + "]").parent().parent().remove()
                     setTimeout(function () {
                         alert("编号为" + response.userId + "的用户删除成功!")
+
                     }, 1000)
                 },
                 error: function (data, textStatus) {

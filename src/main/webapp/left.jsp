@@ -27,7 +27,7 @@
         </c:choose>
 
         <c:if test='${"管理员".equals(sessionScope.mUser.type)}'>
-        <li class="${"userManage".equals(param.navItem)?"active":""}"><a href="userAdd">用户管理</a></li>
+        <li class="${"userAdd".equals(param.navItem)?"active":""}"><a href="userAdd">用户管理</a></li>
         </c:if>
     </ul>
 </div>

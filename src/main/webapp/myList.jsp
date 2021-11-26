@@ -42,7 +42,7 @@
     </div>
     <div class="row clearfix" id="body" style="display: flex;flex-direction: row;min-height: 600px">
         <jsp:include page="left.jsp">
-            <jsp:param name="navItem" value="userList"/>
+            <jsp:param name="navItem" value="myList"/>
         </jsp:include>
         <div class="col-md-10 column" id="content">
             <div class="row clearfix">
@@ -69,7 +69,7 @@
                         </tr>
                         <tr>
                             <td class="table-left">性别</td>
-                            <td class="table-main">${sessionScope.mUser.sex}</td>
+                            <td class="table-main">${"0".equals(sessionScope.mUser.sex)?"男":"女"}</td>
                         </tr>
                         <tr>
                             <td class="table-left">身份证号</td>

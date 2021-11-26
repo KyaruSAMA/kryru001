@@ -13,12 +13,21 @@ public class Record {
     private String brandName;
     private String categoryName;
     private String userName;
+    private int status;
 
     public Record() {
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     public Record(long id, long userId, long carId, String startDate, String returnDate, double payment, String model,
-                  String comments, String brandName, String categoryName) {
+                  String comments, String brandName, String categoryName, int status) {
         this.id = id;
         this.userId = userId;
         this.carId = carId;
@@ -29,6 +38,7 @@ public class Record {
         this.comments = comments;
         this.brandName = brandName;
         this.categoryName = categoryName;
+        this.status=status;
     }
 
     public Record(long id, double payment, String model, String comments,

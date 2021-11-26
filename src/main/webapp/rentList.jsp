@@ -43,7 +43,7 @@
     </div>
     <div class="row clearfix" id="body" style="display: flex;flex-direction: row;min-height: 600px">
         <jsp:include page="left.jsp">
-            <jsp:param name="navItem" value="carList"/>
+            <jsp:param name="navItem" value="rentList"/>
         </jsp:include>
         <div class="col-md-10 column" id="content">
             <div class="row clearfix">
@@ -103,7 +103,14 @@
                                 <td>${mRecord.categoryName}</td>
                                 <td>${mRecord.rent}</td>
                                 <td><a href="carDetail?carId=${mRecord.carId}">详情</a></td>
+                                <c:choose>
+                                <c:when test='${"否".equals(mRecord.status)}'>
                                 <td><a href="doReturnCar?carId=${mRecord.carId}">还车</a></td>
+                                </c:when>
+                                <c:when test='${"是".equals(mRecord.status)}'>
+                                    <td>已还车</td>
+                                </c:when>
+                                </c:choose>
                                 </tr>
                         </c:forEach>
 </c:if>

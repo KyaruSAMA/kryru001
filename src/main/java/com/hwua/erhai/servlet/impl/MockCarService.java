@@ -11,6 +11,7 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class MockCarService implements ICarService {
+
     static private  final List<String>BRAND_LIST=
             Arrays.asList("奇瑞","五菱宏光","奔驰","宝马","奥迪");
     static private  final List<String>MODEL_LIST=
@@ -100,6 +101,7 @@ return cars;
             record.setCategoryName(CATEGORY_LIST.get(i%CATEGORY_LIST.size()));
             record.setComments("简介：xxx"+i);
             record.setUserName("zhangsan");
+            record.setStatus(i%2);
             records.add(record);
         }
         return records;
@@ -118,6 +120,7 @@ return cars;
         record.setCategoryName(r.getCategoryName());
         record.setComments(r.getComments());
         record.setUserName(r.getUserName());
+        record.setStatus(r.getStatus());
         return record;
     }
     static private List<Record> copyRecords(List<Record> recordList){

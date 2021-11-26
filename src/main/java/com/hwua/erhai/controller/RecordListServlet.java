@@ -91,6 +91,7 @@ public class RecordListServlet extends HttpServlet {
                 mRecord.setComments(String.valueOf(record.getComments()));
                 mRecord.setPayment(String.valueOf(record.getPayment()));
                 mRecord.setRent(String.format("%.2f/天",record.getRent()));
+                mRecord.setStatus(record.getStatus()==0?"是":"否");
                 usermRecords.add(mRecord);
             }
                 //将model数据放入re，之后再jsp中能通过requestScope访问到model数据
@@ -122,6 +123,7 @@ public class RecordListServlet extends HttpServlet {
                 mRecord.setComments(String.valueOf(record.getComments()));
                 mRecord.setPayment(String.valueOf(record.getPayment()));
                 mRecord.setRent(String.format("%.2f/天",record.getRent()));
+                mRecord.setStatus(record.getStatus()==0?"是":"否");
                 mRecords.add(mRecord);}
                 //将model数据放入re，之后再jsp中能通过requestScope访问到model数据
                 request.setAttribute("mRecords",mRecords);

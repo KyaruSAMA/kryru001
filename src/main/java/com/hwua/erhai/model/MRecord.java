@@ -13,9 +13,18 @@ public class MRecord {
     private String brandName;
     private String categoryName;
     private String userName;
+    private  String status;
 public MRecord(){
 
 }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public String getId() {
         return id;

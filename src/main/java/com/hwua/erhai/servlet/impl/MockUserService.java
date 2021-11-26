@@ -181,8 +181,8 @@ public class MockUserService implements IUserService {
     @Override
     public User deleteUser(long userId) {
         int carIndex=-1;
-        for (int i=0;i<USER_TABLE.size();i++){
-            if (USER_TABLE.get(i).getId()==userId){
+        for (int i=0;i<USER_LIST.size();i++){
+            if (USER_LIST.get(i).getId()==userId){
                 carIndex=i;
                 break;
             }
@@ -190,6 +190,6 @@ public class MockUserService implements IUserService {
         if (carIndex==-1){
             return null;
         }
-        return copyUser(USER_TABLE.remove(carIndex));
+        return copyUser(USER_LIST.remove(carIndex));
     }
 }

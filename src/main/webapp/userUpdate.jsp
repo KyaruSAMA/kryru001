@@ -95,7 +95,8 @@
                         </div>
 
 
-
+<c:choose>
+    <c:when test='${"管理员".equals(sessionScope.mUser.type)}'>
                         <div class="form-group">
                             <label for="type">角色(用户类型)</label>
                             <div class="radio" id="type">
@@ -103,6 +104,12 @@
                                 <label><input type="radio" name="type" id="admin" value="管理员">管理员</label>&nbsp;
                             </div>
                         </div>&nbsp;
+    </c:when>
+    <c:when test='${"普通用户".equals(sessionScope.mUser.type)}'>
+        <label><input type="hidden" name="type" id="user1" value="普通用户"></label>
+    </c:when>
+</c:choose>
+
                         <div class="form-group" style="display: flex;justify-content: flex-end">
                             <button class="btn btn-default" type="reset">重置
                             </button>

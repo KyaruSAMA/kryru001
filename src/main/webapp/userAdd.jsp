@@ -37,7 +37,7 @@
     </div>
     <div class="row clearfix" id="body" style="display: flex;flex-direction: row;min-height: 600px">
         <jsp:include page="left.jsp">
-            <jsp:param name="navItem" value="carManage"/>
+            <jsp:param name="navItem" value="userAdd"/>
         </jsp:include>
         <div class="col-md-10 column" id="content">
             <div class="row clearfix">
