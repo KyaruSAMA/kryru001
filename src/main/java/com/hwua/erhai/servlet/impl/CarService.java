@@ -12,9 +12,16 @@ import com.hwua.erhai.entity.Brand;
 import com.hwua.erhai.entity.Car;
 import com.hwua.erhai.entity.Category;
 import com.hwua.erhai.entity.Record;
+import com.hwua.erhai.jdbc.ConnectionFactory;
+import com.hwua.erhai.jdbc.DBUtil;
+import com.hwua.erhai.jdbc.ResultSetHandler;
 import com.hwua.erhai.servlet.ICarService;
 import com.hwua.erhai.servlet.query.QueryCondition;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CarService implements ICarService {
@@ -35,8 +42,22 @@ public class CarService implements ICarService {
 
     @Override
     public List<Car> queryCars(List<QueryCondition> conditions, int limit, int offset) {
-        return null;
-    }
+        List<Car>copyCars=carDao.queryAllCars(conditions);
+        //select * from recordList where CarId="" and userId="" ;
+
+        if (copyCars.size()==0){
+            return copyCars;
+        }
+        //limit ${limit},${offset}
+        int fromIndex=offset;
+        if (fromIndex>=copyCars.size()){
+            fromIndex=copyCars.size()-1;
+        }
+        int toIndex=offset+limit;
+        if (toIndex>copyCars.size()){
+            toIndex=copyCars.size();
+        }
+        return copyCars.subList(fromIndex,toIndex);}
 
     @Override
     public List<Record> queryRecord(List<QueryCondition> conditions, int limit, int offset) {
@@ -117,4 +138,10 @@ public class CarService implements ICarService {
     public List<Record> queryRecords(String type) {
         return null;
     }
+
+    @Override
+    public Record rentCar(List<QueryCondition> conditions,Long userId, Long carId) {
+
+        return null;
+}
 }

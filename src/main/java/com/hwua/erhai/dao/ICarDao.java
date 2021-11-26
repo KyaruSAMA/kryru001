@@ -1,6 +1,7 @@
 package com.hwua.erhai.dao;
 
 import com.hwua.erhai.entity.Car;
+import com.hwua.erhai.servlet.query.QueryCondition;
 
 import java.sql.Connection;
 import java.util.List;
@@ -12,7 +13,7 @@ public interface ICarDao {
      * @return 汽车的集合
      */
 //s
-    List<Car> queryAllCars();
+    List<Car> queryAllCars(List<QueryCondition> conditions);
 
     /**
      * 按照价格升序查询全部汽车

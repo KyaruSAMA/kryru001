@@ -97,6 +97,6 @@ Car deleteCar(long carId);
     List<Car> queryCars(String type);
 
     List<Record> queryRecords(String type);
-
+Record rentCar(List<QueryCondition> conditions,Long userId,Long carId);
 
 }

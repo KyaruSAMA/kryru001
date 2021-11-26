@@ -4,9 +4,13 @@ import com.hwua.erhai.entity.Brand;
 import com.hwua.erhai.entity.Car;
 import com.hwua.erhai.entity.Category;
 import com.hwua.erhai.entity.Record;
+import com.hwua.erhai.jdbc.ConnectionFactory;
+import com.hwua.erhai.jdbc.DBUtil;
 import com.hwua.erhai.servlet.ICarService;
 import com.hwua.erhai.servlet.query.QueryCondition;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -386,5 +390,50 @@ return cars;
     @Override
     public List<Record> queryRecords(String type) {
         return null;
+    }
+
+    @Override
+    public Record rentCar(List<QueryCondition> conditions,Long userId, Long carId) {
+        Connection conn = ConnectionFactory.getConnection();
+        List<Car>copyCars=copyCars(CAR_LIST);
+        copyCars=select(copyCars,conditions);
+        Record record = null;
+        Car car1=new Car();
+
+        try {
+            // 一次成功的租车，涉及修改汽车表和租车记录表这两张独立的表，
+            // 所以需要启动事务来保证要么两者同时修改成功，要么两者同时不做修改（也就是失败后回滚）
+            // 启动本次连接的事务功能
+            conn.setAutoCommit(false);
+            // 查询当前汽车是否可租赁
+            for (Car car:copyCars) {
+                if (car.getId()==carId){
+                    car1=car;
+                }
+            }
+
+            if (car1 != null && car1.getStatus() == 0 && car1.getUsable() == 0) {
+                // 如果可以租赁，修改汽车表
+                 car1.setStatus(1);
+                addAndReturnCar(car1);
+
+                }
+
+            // 提交事务
+            conn.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                // 如果修改汽车表和租车记录表时发生异常，就回滚事务
+                conn.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+        } finally {
+            // 关闭连接
+            DBUtil.close(conn);
+        }
+        return record;
+
     }
 }

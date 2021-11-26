@@ -5,6 +5,7 @@ import com.hwua.erhai.entity.Car;
 import com.hwua.erhai.jdbc.JDBCTemplate;
 import com.hwua.erhai.jdbc.PreparedStatementSetter;
 import com.hwua.erhai.jdbc.ResultSetHandler;
+import com.hwua.erhai.servlet.query.QueryCondition;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,13 +17,40 @@ import java.util.List;
 public class CarDaoImpl extends JDBCTemplate implements ICarDao {
 
     @Override
-    public List<Car> queryAllCars() {
+    public List<Car> queryAllCars(List<QueryCondition> conditions) {
+        StringBuilder otherCondetions = new StringBuilder();
+        String orderCondition = "";
+
+        for (QueryCondition condition:conditions){
+            if ("carId".equals(condition.getField())){
+                otherCondetions.append(String.format("AND car.id = '%s'",condition.getValue()));
+            }else if ("carBrand".equals(condition.getField())){
+                otherCondetions.append(String.format("AND b.name = '%s'",condition.getValue()));
+            }else if ("carCategory".equals(condition.getField())){
+                otherCondetions.append(String.format("AND cay.name = '%s'",condition.getValue()));
+            }else if ("usable".equals(condition.getField())){
+                otherCondetions.append(String.format("AND car.usable = '%s'",condition.getValue()));
+            }
+        }
+        for (QueryCondition condition:conditions){
+            if ("priceOrder".equals(condition.getField())){
+                if ("asc".equals(condition.getValue())){
+                    orderCondition = " ORDER BY car.rent ASC";
+                } else if ("desc".equals(condition.getValue())){
+                    orderCondition = " ORDER BY car.rent DESC";
+                }
+                break;
+            }
+        }
+
+
+
         final List<Car> list = new ArrayList<>();
         String sql = "SELECT car.id, b.id, b.name, car.model, cay.id, cay.name,"
-                + "car.t_comments, car.rent,car.status,car.usable "
+                + "car.t_comments, car.rent,car.status,car.usable,car.car_number,car.color,car.price "
                 + "FROM t_car car, t_brand b, t_category cay "
-                + "WHERE car.brand_id = b.id AND car.category_id = cay.id "
-                + "ORDER BY car.id";
+                + "WHERE car.brand_id = b.id AND car.category_id = cay.id " +otherCondetions.toString()
+                + orderCondition;
         query(sql, null, new ResultSetHandler() {
             @Override
             public void handleRs(ResultSet rs) throws SQLException {
@@ -38,38 +66,17 @@ public class CarDaoImpl extends JDBCTemplate implements ICarDao {
                             rs.getDouble(8),
                             rs.getInt(9),
                             rs.getInt(10));
+                    rs.getString(11);
+                    rs.getString(12);
+                    rs.getLong(13);
                     list.add(car);
                 }
             }
         });
         return list;
-//        final List<Car> list = new ArrayList<>();
-//        String sql = "SELECT car.id, b.id, b.name, car.model, cay.id, cay.name,"
-//                + "car.t_comments, car.rent,car.status, car.usable "
-//                + "FROM t_car car, t_brand b, t_category cay "
-//                + "WHERE car.brand_id = b.id AND car.category_id = cay.id "
-//                + "ORDER BY car.id";
-//        query(sql, null, new ResultSetHandler() {
-//            @Override
-//            public void handleRs(ResultSet rs) throws SQLException {
-//                while (rs.next()) {
-//                    Car car = new Car(
-//                            rs.getLong(1),
-//                            rs.getInt(2),
-//                            rs.getString(3),
-//                            rs.getString(4),
-//                            rs.getInt(5),
-//                            rs.getString(6),
-//                            rs.getString(7),
-//                            rs.getDouble(8),
-//                            rs.getInt(9),
-//                            rs.getInt(10));
-//                    list.add(car);
-//                }
-//            }
-//        });
-//        return list;
     }
+
+
 
     @Override
     public List<Car> queryCarsByPriceAsc() {

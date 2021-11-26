@@ -7,6 +7,7 @@ import com.hwua.erhai.model.MCarSearch;
 import com.hwua.erhai.model.MPageNav;
 import com.hwua.erhai.model.MUser;
 import com.hwua.erhai.servlet.ICarService;
+import com.hwua.erhai.servlet.impl.CarService;
 import com.hwua.erhai.servlet.impl.MockCarService;
 import com.hwua.erhai.servlet.query.QueryCondition;
 import org.apache.commons.lang3.StringUtils;
@@ -20,7 +21,7 @@ import java.util.List;
 
 @WebServlet(name = "CarListServlet", value = "/carList")
 public class CarListServlet extends HttpServlet {
-    ICarService carService=new MockCarService();
+   ICarService carService=new CarService();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //从客户端请求里读取出与汽车查询条件相关的参数

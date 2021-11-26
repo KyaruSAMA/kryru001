@@ -17,7 +17,23 @@ public class Car {
 
     public Car() {
     }
+    public Car(long id, int brandId, String brandName, String model, int categoryId,
+               String categoryName, String comments, double rent, int status,int usable,String carNumber,String color,double price) {
+        this.id = id;
+        this.brandId = brandId;
+        this.brandName = brandName;
+        this.model = model;
+        this.categoryId = categoryId;
+        this.categoryName = categoryName;
+        this.comments = comments;
+        this.rent = rent;
+        this.status = status;
+        this.usable=usable;
+        this.carNumber=carNumber;
+        this.color=color;
+        this.price=price;
 
+    }
     public Car(long id, int brandId, String brandName, String model, int categoryId,
                String categoryName, String comments, double rent, int status) {
         this.id = id;
