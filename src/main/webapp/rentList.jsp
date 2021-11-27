@@ -79,29 +79,27 @@
                         <thead>
                         <tr>
                             <th>编号</th>
+                            <th>用户编号</th>
                             <th>用户</th>
                             <th>汽车编号</th>
-                            <th>型号</th>
-                            <th>简介</th>
-                            <th>品牌</th>
-                            <th>类型</th>
-                            <th>每日租金</th>
+                            <th>开始时间</th>
+                            <th>还车时间</th>
+                            <th>租金</th>
                             <th>详情</th>
                             <th>还车</th>
                         </tr>
                         </thead>
                         <tbody>
-<c:if test='${"管理员".equals(sessionScope.mUser.type)}'>
+
                         <c:forEach var="mRecord" items="${requestScope.mRecords}">
                             <tr>
                                 <td>${mRecord.id}</td>
+                                <td>${mRecord.userId}</td>
                                 <td>${mRecord.userName}</td>
                                 <td>${mRecord.carId}</td>
-                                <td>${mRecord.model}</td>
-                                <td>${mRecord.comments}</td>
-                                <td>${mRecord.brandName}</td>
-                                <td>${mRecord.categoryName}</td>
-                                <td>${mRecord.rent}</td>
+                                <td>${mRecord.startDate}</td>
+                                <td>${mRecord.returnDate}</td>
+                                <td>${mRecord.payment}</td>
                                 <td><a href="carDetail?carId=${mRecord.carId}">详情</a></td>
                                 <c:choose>
                                 <c:when test='${"否".equals(mRecord.status)}'>
@@ -113,23 +111,8 @@
                                 </c:choose>
                                 </tr>
                         </c:forEach>
-</c:if>
-<c:if test='${"普通用户".equals(sessionScope.mUser.type)}'>
-<c:forEach var="mRecord" items="${requestScope.usermRecords}">
-    <tr>
-        <td>${mRecord.id}</td>
-        <td>${mRecord.userName}</td>
-        <td>${mRecord.carId}</td>
-        <td>${mRecord.model}</td>
-        <td>${mRecord.comments}</td>
-        <td>${mRecord.brandName}</td>
-        <td>${mRecord.categoryName}</td>
-        <td>${mRecord.rent}</td>
-        <td><a href="carDetail?carId=${mRecord.carId}">详情</a></td>
-        <td><a href="doReturnCar?carId=${mRecord.carId}">还车</a></td>
-    </tr>
-</c:forEach>
-</c:if>
+
+
                         </tbody>
                     </table>
                     <div style="display: flex;justify-content: center;font-size: 12px;">

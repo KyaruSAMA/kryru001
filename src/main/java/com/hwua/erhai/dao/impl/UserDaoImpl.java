@@ -13,18 +13,17 @@ import java.sql.SQLException;
 public class UserDaoImpl extends JDBCTemplate implements IUserDao {
 
     @Override
-    public User queryUser(final String userName, final String password, final int type) {
+    public User queryUser(final String userName, final String password) {
         final User user = new User();
         String sql = "SELECT id,username,password,"
                 + "sex,id_number,tel,addr,type "
                 + "FROM t_user WHERE username=? "
-                + "AND password=? AND type=?";
+                + "AND password=? ";
         query(sql, new PreparedStatementSetter() {
             @Override
             public void setValues(PreparedStatement pstmt) throws SQLException {
                 pstmt.setString(1, userName);
                 pstmt.setString(2, password);
-                pstmt.setInt(3, type);
             }
         }, new ResultSetHandler() {
             @Override

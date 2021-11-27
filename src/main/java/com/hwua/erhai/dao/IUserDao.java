@@ -11,7 +11,7 @@ public interface IUserDao {
      * @param type     账户类型
      * @return 查询的用户
      */
-    User queryUser(String userName, String password, int type);
+    User queryUser(String userName, String password);
 
     /**
      * 通过用户名查找对应的用户

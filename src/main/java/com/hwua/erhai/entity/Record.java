@@ -18,6 +18,16 @@ public class Record {
     public Record() {
     }
 
+    public Record(long id, long userId, long carId, String userName, String startDate, String returnDate,double payment,int status) {
+        this.id = id;
+        this.userId = userId;
+        this.carId = carId;
+        this.userName=userName;
+        this.startDate = startDate;
+        this.returnDate = returnDate;
+        this.payment = payment;
+        this.status=status;}
+
     public int getStatus() {
         return status;
     }
@@ -93,6 +103,9 @@ public class Record {
         this.returnDate = returnDate;
 
     }
+
+
+
     public long getId() {
         return id;
     }

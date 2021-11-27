@@ -6,6 +6,7 @@ import com.hwua.erhai.jdbc.DBUtil;
 import com.hwua.erhai.jdbc.JDBCTemplate;
 import com.hwua.erhai.jdbc.PreparedStatementSetter;
 import com.hwua.erhai.jdbc.ResultSetHandler;
+import com.hwua.erhai.servlet.query.QueryCondition;
 import com.hwua.erhai.util.Util;
 
 import java.sql.*;
@@ -192,9 +193,22 @@ public class RecordDaoImpl extends JDBCTemplate implements IRecordDao {
     }
 
     @Override
-    public List<Record> queryAllRecords() {
+    public List<Record> queryAllRecords(List<QueryCondition> conditions) {
+        StringBuilder otherCondetions = new StringBuilder();
+
+        for (QueryCondition condition:conditions){
+            if ("carId".equals(condition.getField())){
+                otherCondetions.append(String.format(" AND r.car_id = %s",condition.getValue()));
+            }else if ("userName".equals(condition.getField())){
+                otherCondetions.append(String.format(" AND u.username = '%s'",condition.getValue()));
+            }
+        }
+
+
+
         final List<Record> list = new ArrayList<>();
-        String sql = "select Id,user_id,car_id,start_date,return_date,payment from t_record ";
+        String sql = "select r.Id,r.user_id,r.car_id,u.username,r.start_date,r.return_date,r.payment,c.status from t_car c,t_record r,t_user u " +
+                "where r.user_id=u.id and c.id=r.car_id"+otherCondetions.toString();
 
         query(sql, null,
          new ResultSetHandler() {
@@ -207,7 +221,9 @@ public class RecordDaoImpl extends JDBCTemplate implements IRecordDao {
                             rs.getLong(3),
                             rs.getString(4),
                             rs.getString(5),
-                            rs.getDouble(6)
+                            rs.getString(6),
+                            rs.getDouble(7),
+                            rs.getInt(8)
 
                     );
                     list.add(record);

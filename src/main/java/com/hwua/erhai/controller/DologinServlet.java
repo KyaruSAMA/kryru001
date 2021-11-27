@@ -4,6 +4,7 @@ import com.hwua.erhai.entity.User;
 import com.hwua.erhai.model.MUser;
 import com.hwua.erhai.servlet.IUserService;
 import com.hwua.erhai.servlet.impl.MockUserService;
+import com.hwua.erhai.servlet.impl.UserService;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -12,7 +13,7 @@ import java.io.IOException;
 
 @WebServlet(name = "LoginServlet", value = "/doLogin")
 public class DologinServlet extends HttpServlet {
-    IUserService userService=new MockUserService();
+    IUserService userService=new UserService();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

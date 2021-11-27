@@ -1,6 +1,7 @@
 package com.hwua.erhai.dao;
 
 import com.hwua.erhai.entity.Record;
+import com.hwua.erhai.servlet.query.QueryCondition;
 
 import java.sql.Connection;
 import java.util.List;
@@ -59,7 +60,7 @@ public interface IRecordDao {
      *
      * @return 租赁记录集合
      */
-    List<Record> queryAllRecords();
+    List<Record> queryAllRecords(List<QueryCondition> conditions);
 
     /**
      * 查询指定汽车租赁记录

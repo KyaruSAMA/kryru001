@@ -65,10 +65,10 @@ public class CarDaoImpl extends JDBCTemplate implements ICarDao {
                             rs.getString(7),
                             rs.getDouble(8),
                             rs.getInt(9),
-                            rs.getInt(10));
-                    rs.getString(11);
-                    rs.getString(12);
-                    rs.getLong(13);
+                            rs.getInt(10),
+                    rs.getString(11),
+                    rs.getString(12),
+                    rs.getLong(13));
                     list.add(car);
                 }
             }
@@ -342,27 +342,28 @@ public class CarDaoImpl extends JDBCTemplate implements ICarDao {
         return list;
     }
 //todo
+
     @Override
     public int addCar(final Car car) {
-        String sql = "insert into t_car (id,car_number,brand_id,model,color,category_id,t_comments,price,rent,status,usable)"
+        String sql = "insert into t_car (car_number,brand_id,model,color,category_id,t_comments,price,rent,status,usable)"
                 +"values (?,?,?,?,?,?,?,?,?,?,?)";
       return update(sql, new PreparedStatementSetter() {
           @Override
           public void setValues(PreparedStatement pstmt) throws SQLException {
-              pstmt.setLong(1,car.getId());
-              pstmt.setString(2,car.getCarNumber());
-              pstmt.setInt(3,car.getBrandId());
-              pstmt.setString(4,car.getModel());
-              pstmt.setString(5,car.getColor());
-              pstmt.setInt(6,car.getCategoryId());
-              pstmt.setString(7,car.getComments());
-              pstmt.setDouble(8,car.getPrice());
-              pstmt.setDouble(9,car.getRent());
-              pstmt.setInt(10,car.getStatus());
-              pstmt.setInt(11,car.getUsable());
+              pstmt.setString(1,car.getCarNumber());
+              pstmt.setInt(2,car.getBrandId());
+              pstmt.setString(3,car.getModel());
+              pstmt.setString(4,car.getColor());
+              pstmt.setInt(5,car.getCategoryId());
+              pstmt.setString(6,car.getComments());
+              pstmt.setDouble(7,car.getPrice());
+              pstmt.setDouble(8,car.getRent());
+              pstmt.setInt(9,car.getStatus());
+              pstmt.setInt(10,car.getUsable());
 
           }
       });
+
     }
 
     @Override

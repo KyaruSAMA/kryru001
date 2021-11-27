@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import com.hwua.erhai.entity.Car;
 
 import com.hwua.erhai.servlet.ICarService;
+import com.hwua.erhai.servlet.impl.CarService;
 import com.hwua.erhai.servlet.impl.MockCarService;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
@@ -23,7 +24,7 @@ import java.util.Map;
 
 @WebServlet(name = "DoAddCarServlet", value = "/doCarAdd")
 public class DoAddCarServlet extends HttpServlet {
-    ICarService CarService=new MockCarService();
+    ICarService CarService=new CarService();
     //上传文件储存目录
     private static final String UpLOAD_DIRECTORY="upload";
     //上传配置
@@ -109,13 +110,10 @@ public class DoAddCarServlet extends HttpServlet {
                     fileItemMap.get("usable").getString("UTF-8");
 
             Car car = new Car();
-            car.setId(-1);
             car.setCarNumber(carNumber);
-            car.setBrandId(-1);
             car.setBrandName(brand);
             car.setModel(model);
             car.setColor(color);
-            car.setCategoryId(-1);
           car.setCategoryName(category);
           car.setComments(comments);
           car.setPrice(Double.parseDouble(price));

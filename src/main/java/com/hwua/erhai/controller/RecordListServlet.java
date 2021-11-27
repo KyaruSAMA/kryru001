@@ -6,6 +6,7 @@ import com.hwua.erhai.entity.Record;
 import com.hwua.erhai.model.*;
 import com.hwua.erhai.servlet.ICarService;
 import com.hwua.erhai.servlet.IUserService;
+import com.hwua.erhai.servlet.impl.CarService;
 import com.hwua.erhai.servlet.impl.MockCarService;
 import com.hwua.erhai.servlet.impl.MockUserService;
 import com.hwua.erhai.servlet.query.QueryCondition;
@@ -20,11 +21,12 @@ import java.util.List;
 
 @WebServlet(name = "AdminRecordServlet", value = "/rentList")
 public class RecordListServlet extends HttpServlet {
-    ICarService carService= new MockCarService();
-    IUserService userService=new MockUserService();
+    ICarService carService=new CarService();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //从客户端请求里读取出与汽车查询条件相关的参数
+        HttpSession session=request.getSession(false);
+        MUser mUser=(MUser)session.getAttribute("mUser");
         String carId=request.getParameter("carId");
         String userName=request.getParameter("userName");
 
@@ -33,7 +35,6 @@ public class RecordListServlet extends HttpServlet {
 
         List<String> params=new ArrayList<>();
         List<QueryCondition> queryCondition=new ArrayList<>();
-        List<QueryCondition> userqueryCondition=new ArrayList<>();
         if (StringUtils.isNotEmpty(carId)){
             params.add(
                 String.format("carId=%s",carId));
@@ -43,23 +44,18 @@ public class RecordListServlet extends HttpServlet {
                 params.add(String.format("userName=%s",userName));
                 queryCondition.add(new QueryCondition("userName",userName));
             }
-            HttpSession session=request.getSession(false);
-            MUser mUser=(MUser)session.getAttribute("mUser");
-        if ("普通用户".equals(mUser.getType())){
-            queryCondition.add(new QueryCondition("usable","0"));
+        if ("普通用户".equals(mUser.getType())) {
+           queryCondition.add(new QueryCondition("userName",mUser.getUsername()));
         }
-        params.add(String.format("userName=%s",userName));
-        userqueryCondition.add(new QueryCondition("userName",mUser.getUsername()));
-        //用户查询
-        if (StringUtils.isNotEmpty(carId)){params.add(
-            String.format("carId=%s",carId));
-            userqueryCondition.add(new QueryCondition("carId",carId));
-        }
+
             String queryParams=String.join("&",params);
-            String baseUrl="recordList";
+            String baseUrl="rentList";
             if (StringUtils.isNotEmpty(queryParams)){
                 baseUrl=baseUrl+"?"+queryParams;
             }
+
+
+
 
             //根据指定的条件，查询符合条件的所有汽车总数
             //相当于select count(*)from t_car where ${queryConditions}
@@ -73,38 +69,6 @@ public class RecordListServlet extends HttpServlet {
             request.setAttribute("mPageNav",mPageNav);
             //根据条件查询出来的queryCondition，以及分导航中指定页面需要查询的数据范围，也就是limit和offset参数
             //查询出页面需要的数据
-        if ("普通用户".equals(mUser.getType())){
-            List<Record> userrecordList=carService.queryRecord(userqueryCondition,Integer.parseInt(mPageNav.limit),Integer.parseInt(mPageNav.offset));
-            List<MRecord> usermRecords=new ArrayList<>(userrecordList.size());
-            for (Record record:userrecordList
-            ) {
-                MRecord mRecord=new MRecord();
-                mRecord.setCarId(String.valueOf(record.getCarId()));
-                mRecord.setUserId(String.valueOf(record.getUserId()));
-                mRecord.setUserName(String.valueOf(record.getUserName()));
-                mRecord.setId(String.valueOf(record.getId()));
-                mRecord.setStartDate(String.valueOf(record.getStartDate()));
-                mRecord.setReturnDate(String.valueOf(record.getReturnDate()));
-                mRecord.setModel(String.valueOf(record.getModel()));
-                mRecord.setBrandName(String.valueOf(record.getBrandName()));
-                mRecord.setCategoryName(String.valueOf(record.getCategoryName()));
-                mRecord.setComments(String.valueOf(record.getComments()));
-                mRecord.setPayment(String.valueOf(record.getPayment()));
-                mRecord.setRent(String.format("%.2f/天",record.getRent()));
-                mRecord.setStatus(record.getStatus()==0?"是":"否");
-                usermRecords.add(mRecord);
-            }
-                //将model数据放入re，之后再jsp中能通过requestScope访问到model数据
-                request.setAttribute("usermRecords",usermRecords);
-                //McarSearch用于保存查询的条件，将其按照查询传入的值，填写到搜索表单中
-                MRecordSearch mRecordSearch=new MRecordSearch(carId,userName);
-                request.setAttribute("mRecordSearch",mRecordSearch);
-                //使用forward方法将M和V结合起来，从而生成动态的html页面，并最终返回给客户端浏览器
-                //这就是完整的Mvc处理张
-
-        }
-
-        if ("管理员".equals(mUser.getType())){
             List<Record> recordList=carService.queryRecord(queryCondition,Integer.parseInt(mPageNav.limit),Integer.parseInt(mPageNav.offset));
             List<MRecord> mRecords=new ArrayList<>(recordList.size());
 
@@ -117,12 +81,7 @@ public class RecordListServlet extends HttpServlet {
                 mRecord.setId(String.valueOf(record.getId()));
                 mRecord.setStartDate(String.valueOf(record.getStartDate()));
                 mRecord.setReturnDate(String.valueOf(record.getReturnDate()));
-                mRecord.setModel(String.valueOf(record.getModel()));
-                mRecord.setBrandName(String.valueOf(record.getBrandName()));
-                mRecord.setCategoryName(String.valueOf(record.getCategoryName()));
-                mRecord.setComments(String.valueOf(record.getComments()));
                 mRecord.setPayment(String.valueOf(record.getPayment()));
-                mRecord.setRent(String.format("%.2f/天",record.getRent()));
                 mRecord.setStatus(record.getStatus()==0?"是":"否");
                 mRecords.add(mRecord);}
                 //将model数据放入re，之后再jsp中能通过requestScope访问到model数据
@@ -133,7 +92,7 @@ public class RecordListServlet extends HttpServlet {
                 //使用forward方法将M和V结合起来，从而生成动态的html页面，并最终返回给客户端浏览器
                 //这就是完整的Mvc处理张
 
-        }
+
 
 
             request.getRequestDispatcher("/rentList.jsp").forward(request,response);

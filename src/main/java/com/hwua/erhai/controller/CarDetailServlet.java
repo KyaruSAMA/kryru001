@@ -3,6 +3,7 @@ package com.hwua.erhai.controller;
 import com.hwua.erhai.entity.Car;
 import com.hwua.erhai.model.MCar;
 import com.hwua.erhai.servlet.ICarService;
+import com.hwua.erhai.servlet.impl.CarService;
 import com.hwua.erhai.servlet.impl.MockCarService;
 import com.hwua.erhai.servlet.query.QueryCondition;
 
@@ -15,7 +16,7 @@ import java.util.List;
 
 @WebServlet(name = "CarDetailServletServlet", value = "/carDetail")
 public class CarDetailServlet extends HttpServlet {
-    ICarService carService=new MockCarService();
+    ICarService carService=new CarService();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String carId=request.getParameter("carId");
