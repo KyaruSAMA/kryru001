@@ -7,6 +7,7 @@ import com.hwua.erhai.servlet.ICarService;
 import com.hwua.erhai.servlet.IUserService;
 import com.hwua.erhai.servlet.impl.MockCarService;
 import com.hwua.erhai.servlet.impl.MockUserService;
+import com.hwua.erhai.servlet.impl.UserService;
 import com.hwua.erhai.servlet.query.QueryCondition;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -26,7 +27,7 @@ import java.util.Map;
 
 @WebServlet(name = "DoUserUpdateServlet", value = "/doUserUpdate")
 public class DoUserUpdateServlet extends HttpServlet {
-    IUserService iUserService=new MockUserService();
+    IUserService iUserService=new UserService();
     //上传文件储存目录
     private static final String UpLOAD_DIRECTORY="upload";
     //上传配置

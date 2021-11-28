@@ -179,17 +179,7 @@ public class MockUserService implements IUserService {
     }
 
     @Override
-    public User deleteUser(long userId) {
-        int carIndex=-1;
-        for (int i=0;i<USER_LIST.size();i++){
-            if (USER_LIST.get(i).getId()==userId){
-                carIndex=i;
-                break;
-            }
-        }
-        if (carIndex==-1){
-            return null;
-        }
-        return copyUser(USER_LIST.remove(carIndex));
+    public int deleteUser(long userId) {
+      return 1;
     }
 }

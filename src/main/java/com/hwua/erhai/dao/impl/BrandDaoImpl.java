@@ -46,7 +46,7 @@ public class BrandDaoImpl extends JDBCTemplate implements IBrandDao {
     @Override
     public Brand queryBrandByBrandName(String brandName) {
         Brand brand=new Brand();
-        String sql = "SELECT id,name FROM t_brand where id=?";
+        String sql = "SELECT id,name FROM t_brand where name=?";
         query(sql, new PreparedStatementSetter() {
             @Override
             public void setValues(PreparedStatement pstmt) throws SQLException {

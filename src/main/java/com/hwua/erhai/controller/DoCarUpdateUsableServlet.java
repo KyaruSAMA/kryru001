@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Preconditions;
 import com.hwua.erhai.entity.Car;
 import com.hwua.erhai.servlet.ICarService;
+import com.hwua.erhai.servlet.impl.CarService;
 import com.hwua.erhai.servlet.impl.MockCarService;
 import com.hwua.erhai.servlet.query.QueryCondition;
 import com.hwua.erhai.vo.DoCarUpdateUsableResponse;
@@ -25,7 +26,7 @@ import java.util.Map;
 
 @WebServlet(name = "DoCarUpdateUsableServlet", value = "/doCarUpdateUsable")
 public class DoCarUpdateUsableServlet extends HttpServlet {
-    ICarService CarService=new MockCarService();
+    ICarService CarService=new CarService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

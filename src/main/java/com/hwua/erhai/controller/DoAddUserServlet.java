@@ -5,6 +5,7 @@ import com.hwua.erhai.entity.Car;
 import com.hwua.erhai.entity.User;
 import com.hwua.erhai.servlet.IUserService;
 import com.hwua.erhai.servlet.impl.MockUserService;
+import com.hwua.erhai.servlet.impl.UserService;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -22,7 +23,7 @@ import java.util.Map;
 
 @WebServlet(name = "DoAddUserServlet", value = "/doUserAdd")
 public class DoAddUserServlet extends HttpServlet {
-    IUserService userService=new MockUserService();
+    IUserService userService=new UserService();
     //上传文件储存目录
     private static final String UpLOAD_DIRECTORY="upload";
     //上传配置
@@ -102,7 +103,7 @@ public class DoAddUserServlet extends HttpServlet {
             String type = fileItemMap.get("type").getString("UTF-8");
             Preconditions.checkArgument(StringUtils.isNotBlank(type), "角色不能为空");
             User user = new User();
-            user.setId(-1);
+
             user.setUserName(userName);
             user.setPassword(password);
             user.setSex(Integer.parseInt(sex));

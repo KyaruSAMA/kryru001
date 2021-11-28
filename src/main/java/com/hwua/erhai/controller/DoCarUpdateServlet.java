@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Preconditions;
 import com.hwua.erhai.entity.Car;
 import com.hwua.erhai.servlet.ICarService;
+import com.hwua.erhai.servlet.impl.CarService;
 import com.hwua.erhai.servlet.impl.MockCarService;
 import com.hwua.erhai.servlet.query.QueryCondition;
 import com.hwua.erhai.vo.DoCarUpdateUsableResponse;
@@ -25,7 +26,7 @@ import java.util.Map;
 
 @WebServlet(name = "DoCarUpdateServlet", value = "/doCarUpdate")
 public class DoCarUpdateServlet extends HttpServlet {
-    ICarService CarService=new MockCarService();
+    ICarService CarService=new CarService();
     //上传文件储存目录
     private static final String UpLOAD_DIRECTORY="upload";
     //上传配置
@@ -127,11 +128,11 @@ public class DoCarUpdateServlet extends HttpServlet {
             Car car = carList.get(0);
 
             car.setCarNumber(carNumber);
-            car.setBrandId(-1);
+
             car.setBrandName(brand);
             car.setModel(model);
             car.setColor(color);
-            car.setCategoryId(-1);
+
             car.setCategoryName(category);
             car.setComments(comments);
             car.setPrice(Double.parseDouble(price));

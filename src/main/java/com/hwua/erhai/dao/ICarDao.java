@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.util.List;
 
 public interface ICarDao {
+    List<Car> queryAllCars();
     /**
      * 查询所有的汽车，包含品牌名，类别名
      *
@@ -109,6 +110,7 @@ public interface ICarDao {
      */
     List<Car> queryCarById(long id);
     List<Car> queryCarByCarnumber(long carNumber);
+int updateCar(Car car);
     /**
      * 添加汽车
      *
@@ -117,7 +119,7 @@ public interface ICarDao {
      */
 
     int addCar(Car car);
-
+    int deleteCar(long carId);
     /**
      * 通过汽车编号修改可借汽车的租金
      *
@@ -132,5 +134,7 @@ public interface ICarDao {
      * @param carId
      * @return 修改的行数
      */
+
     int updateCanLendCarUsableById(long carId, int usable);
+    Car queryCarIdbyCarnumber(String carNumber);
 }

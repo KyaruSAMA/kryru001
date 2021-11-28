@@ -368,18 +368,10 @@ return cars;
     }
 
     @Override
-    synchronized public Car deleteCar(long carId) {
-        int carIndex=-1;
-        for (int i=0;i<CAR_LIST.size();i++){
-            if (CAR_LIST.get(i).getId()==carId){
-                carIndex=i;
-                break;
-            }
-        }
-        if (carIndex==-1){
-            return null;
-        }
-        return copyCar(CAR_LIST.remove(carIndex));
+    synchronized public int deleteCar(long carId) {
+        int i = 1;
+
+        return i;
     }
 
     @Override

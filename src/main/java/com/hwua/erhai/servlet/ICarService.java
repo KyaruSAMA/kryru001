@@ -92,7 +92,7 @@ public interface ICarService {
      * @return 修改成功的汽车
      */
     boolean updateCar(String type, String value, long carId);
-Car deleteCar(long carId);
+int deleteCar(long carId);
 
     List<Car> queryCars(String type);
 

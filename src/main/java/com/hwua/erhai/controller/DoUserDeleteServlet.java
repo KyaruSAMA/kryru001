@@ -5,6 +5,7 @@ import com.hwua.erhai.entity.Car;
 import com.hwua.erhai.entity.User;
 import com.hwua.erhai.servlet.IUserService;
 import com.hwua.erhai.servlet.impl.MockUserService;
+import com.hwua.erhai.servlet.impl.UserService;
 import com.hwua.erhai.vo.DoCarDeleteResponse;
 import com.hwua.erhai.vo.DoUserDeleteResponse;
 import org.apache.commons.lang3.StringUtils;
@@ -16,7 +17,7 @@ import java.io.IOException;
 
 @WebServlet(name = "DoUserDeleteServlet", value = "/doUserDelete")
 public class DoUserDeleteServlet extends HttpServlet {
-    IUserService userService=new MockUserService();
+    IUserService userService=new UserService();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -33,15 +34,15 @@ public class DoUserDeleteServlet extends HttpServlet {
             response.getWriter().write("请求参数为空");
             return;
         }
-       User user= userService.deleteUser(Long.parseLong(userId));
-        if (user==null){
+       int user=userService.deleteUser(Long.parseLong(userId));
+        if (user!=1){
             response.setStatus(HttpServletResponse.SC_SERVICE_UNAVAILABLE);
             response.getWriter().write("删除用户失败");
             return;
         }
         response.setStatus(HttpServletResponse.SC_OK);
         DoUserDeleteResponse deleteResponse=new DoUserDeleteResponse(
-                HttpServletResponse.SC_OK,"删除用户成功",user.getId()
+                HttpServletResponse.SC_OK,"删除用户成功",Long.parseLong(userId)
         );
         response.getWriter().write(JSONObject.toJSONString(deleteResponse));
     }

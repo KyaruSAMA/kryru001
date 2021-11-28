@@ -3,6 +3,7 @@ package com.hwua.erhai.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.hwua.erhai.entity.Car;
 import com.hwua.erhai.servlet.ICarService;
+import com.hwua.erhai.servlet.impl.CarService;
 import com.hwua.erhai.servlet.impl.MockCarService;
 import com.hwua.erhai.vo.DoCarDeleteResponse;
 import org.apache.commons.lang3.StringUtils;
@@ -14,7 +15,7 @@ import java.io.IOException;
 
 @WebServlet(name = "DoCarDeleteServlet", value = "/doCarDelete")
 public class DoCarDeleteServlet extends HttpServlet {
-    ICarService CarService=new MockCarService();
+    ICarService CarService=new CarService();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -31,15 +32,15 @@ if (StringUtils.isBlank(carId)){
     response.getWriter().write("请求参数为空");
     return;
 }
-        Car car= CarService.deleteCar(Long.parseLong(carId));
-if (car==null){
+       int car= CarService.deleteCar(Long.parseLong(carId));
+if (car!=1){
     response.setStatus(HttpServletResponse.SC_SERVICE_UNAVAILABLE);
     response.getWriter().write("删除汽车失败");
     return;
 }
 response.setStatus(HttpServletResponse.SC_OK);
 DoCarDeleteResponse deleteResponse=new DoCarDeleteResponse(
-        HttpServletResponse.SC_OK,"删除汽车成功",car.getId()
+        HttpServletResponse.SC_OK,"删除汽车成功",Long.parseLong(carId)
 );
 response.getWriter().write(JSONObject.toJSONString(deleteResponse));
     }

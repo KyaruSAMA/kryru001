@@ -6,6 +6,7 @@ import com.hwua.erhai.entity.User;
 import com.hwua.erhai.model.MUser;
 import com.hwua.erhai.servlet.IUserService;
 import com.hwua.erhai.servlet.impl.MockUserService;
+import com.hwua.erhai.servlet.impl.UserService;
 import com.hwua.erhai.servlet.query.QueryCondition;
 
 import javax.servlet.*;
@@ -17,7 +18,7 @@ import java.util.List;
 
 @WebServlet(name = "UserUpdateServlet", value = "/userUpdate")
 public class UserUpdateServlet extends HttpServlet {
-    IUserService userService = new MockUserService();
+    IUserService userService = new UserService();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

@@ -74,7 +74,7 @@
                         <div class="form-group">
                             <label for="carNumber">车牌号</label>
                             <input type="text"  class="form-control" id="carNumber"
-                                   name="carNumber" placeholder="请输入车牌号">
+                                   name="carNumber" value="${requestScope.mCar.carNumber}">
                         </div>
                         <div class="form-group">
                             <label for="comments">简介</label>

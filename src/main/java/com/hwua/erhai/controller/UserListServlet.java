@@ -6,6 +6,7 @@ import com.hwua.erhai.entity.User;
 import com.hwua.erhai.model.*;
 import com.hwua.erhai.servlet.IUserService;
 import com.hwua.erhai.servlet.impl.MockUserService;
+import com.hwua.erhai.servlet.impl.UserService;
 import com.hwua.erhai.servlet.query.QueryCondition;
 import org.apache.commons.lang3.StringUtils;
 
@@ -18,7 +19,7 @@ import java.util.List;
 
 @WebServlet(name = "UserListServlet", value = "/userList")
 public class UserListServlet extends HttpServlet {
-    IUserService userService=new MockUserService();
+    IUserService userService=new UserService();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //从客户端请求里读取出与汽车查询条件相关的参数
@@ -49,7 +50,7 @@ public class UserListServlet extends HttpServlet {
         }
 
         String queryParams=String.join("&",params);
-        String baseUrl="carList";
+        String baseUrl="userList";
         if (StringUtils.isNotEmpty(queryParams)){
             baseUrl=baseUrl+"?"+queryParams;
         }

@@ -3,6 +3,7 @@ package com.hwua.erhai.controller;
 import com.hwua.erhai.entity.Car;
 import com.hwua.erhai.model.MCar;
 import com.hwua.erhai.servlet.ICarService;
+import com.hwua.erhai.servlet.impl.CarService;
 import com.hwua.erhai.servlet.impl.MockCarService;
 import com.hwua.erhai.servlet.query.QueryCondition;
 
@@ -15,7 +16,7 @@ import java.util.List;
 
 @WebServlet(name = "CarUpdateServlet", value = "/carUpdate")
 public class CarUpdateServlet extends HttpServlet {
-    ICarService carService=new MockCarService();
+    ICarService carService=new CarService();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -40,6 +41,7 @@ public class CarUpdateServlet extends HttpServlet {
         mCar.setModel(String.valueOf(car.getModel()));
         mCar.setColor(String.valueOf(car.getColor()));
         mCar.setComments(String.valueOf(car.getComments()));
+        mCar.setCarNumber(String.valueOf(car.getCarNumber()));
         mCar.setBrand(String.valueOf(car.getBrandName()));
         mCar.setCategory(String.valueOf(car.getCategoryName()));
         mCar.setPrice(String.valueOf(car.getPrice()));

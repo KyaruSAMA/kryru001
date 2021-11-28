@@ -1,6 +1,9 @@
 package com.hwua.erhai.dao;
 
 import com.hwua.erhai.entity.User;
+import com.hwua.erhai.servlet.query.QueryCondition;
+
+import java.util.List;
 
 public interface IUserDao {
     /**
@@ -8,7 +11,7 @@ public interface IUserDao {
      *
      * @param userName 用户名
      * @param password 密码
-     * @param type     账户类型
+
      * @return 查询的用户
      */
     User queryUser(String userName, String password);
@@ -28,4 +31,7 @@ public interface IUserDao {
      * @return 添加的行数 1：添加成功  0：添加失败
      */
     int addUser(User user);
+    List<User> queryUser(List<QueryCondition>conditions);
+    int updateUser(User user);
+    int deleteUser(Long userId);
 }

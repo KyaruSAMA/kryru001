@@ -30,6 +30,6 @@ public interface IUserService {
      */
     boolean register(User user);
     User updateAndReturnCar(User user);
-    User deleteUser(long userId);
+    int deleteUser(long userId);
 
 }

@@ -17,19 +17,51 @@ import java.util.List;
 public class CarDaoImpl extends JDBCTemplate implements ICarDao {
 
     @Override
+    public List<Car> queryAllCars() {
+        final List<Car> list = new ArrayList<>();
+        String sql = "SELECT car.id, b.id, b.name, car.model, cay.id, cay.name,"
+                + "car.t_comments, car.rent,car.status,car.usable,car.car_number,car.color,car.price "
+                + "FROM t_car car, t_brand b, t_category cay "
+                + "WHERE car.brand_id = b.id AND car.category_id = cay.id " ;
+        query(sql, null, new ResultSetHandler() {
+            @Override
+            public void handleRs(ResultSet rs) throws SQLException {
+                while (rs.next()) {
+                    Car car = new Car(
+                            rs.getLong(1),
+                            rs.getInt(2),
+                            rs.getString(3),
+                            rs.getString(4),
+                            rs.getInt(5),
+                            rs.getString(6),
+                            rs.getString(7),
+                            rs.getDouble(8),
+                            rs.getInt(9),
+                            rs.getInt(10),
+                            rs.getString(11),
+                            rs.getString(12),
+                            rs.getLong(13));
+                    list.add(car);
+                }
+            }
+        });
+        return list;
+    }
+
+    @Override
     public List<Car> queryAllCars(List<QueryCondition> conditions) {
         StringBuilder otherCondetions = new StringBuilder();
         String orderCondition = "";
 
         for (QueryCondition condition:conditions){
             if ("carId".equals(condition.getField())){
-                otherCondetions.append(String.format("AND car.id = '%s'",condition.getValue()));
+                otherCondetions.append(String.format(" AND car.id = '%s'",condition.getValue()));
             }else if ("carBrand".equals(condition.getField())){
-                otherCondetions.append(String.format("AND b.name = '%s'",condition.getValue()));
+                otherCondetions.append(String.format(" AND b.name = '%s'",condition.getValue()));
             }else if ("carCategory".equals(condition.getField())){
-                otherCondetions.append(String.format("AND cay.name = '%s'",condition.getValue()));
+                otherCondetions.append(String.format(" AND cay.name = '%s'",condition.getValue()));
             }else if ("usable".equals(condition.getField())){
-                otherCondetions.append(String.format("AND car.usable = '%s'",condition.getValue()));
+                otherCondetions.append(String.format(" AND car.usable = '%s'",condition.getValue()));
             }
         }
         for (QueryCondition condition:conditions){
@@ -341,12 +373,34 @@ public class CarDaoImpl extends JDBCTemplate implements ICarDao {
         });
         return list;
     }
+
+    @Override
+    public int updateCar(Car car) {
+        String sql = "UPDATE t_car SET car_number =?,brand_id =?,model=?,color=?,category_id=?,t_comments=?,price=?,rent=?,usable=?,status=? WHERE id = ?";
+        return update(sql, new PreparedStatementSetter() {
+            @Override
+            public void setValues(PreparedStatement pstmt) throws SQLException {
+                pstmt.setString(1,car.getCarNumber());
+                pstmt.setInt(2,car.getBrandId());
+                pstmt.setString(3,car.getModel());
+                pstmt.setString(4,car.getColor());
+                pstmt.setInt(5,car.getCategoryId());
+                pstmt.setString(6,car.getComments());
+                pstmt.setDouble(7,car.getPrice());
+                pstmt.setDouble(8,car.getRent());
+                pstmt.setInt(9,car.getUsable());
+                pstmt.setInt(10,car.getStatus());
+                pstmt.setLong(11,car.getId());
+            }
+        });
+    }
+
 //todo
 
     @Override
     public int addCar(final Car car) {
         String sql = "insert into t_car (car_number,brand_id,model,color,category_id,t_comments,price,rent,status,usable)"
-                +"values (?,?,?,?,?,?,?,?,?,?,?)";
+                +"values (?,?,?,?,?,?,?,?,?,?)";
       return update(sql, new PreparedStatementSetter() {
           @Override
           public void setValues(PreparedStatement pstmt) throws SQLException {
@@ -365,7 +419,16 @@ public class CarDaoImpl extends JDBCTemplate implements ICarDao {
       });
 
     }
-
+    @Override
+    public int deleteCar(long carId) {
+        String sql = "DELETE FROM t_car where id=?";
+        return update(sql, new PreparedStatementSetter() {
+            @Override
+            public void setValues(PreparedStatement pstmt) throws SQLException {
+                pstmt.setLong(1,carId);
+            }
+        });
+    }
     @Override
     public int updateCanLendCarRentById(final long carId, final double rent) {
         String sql = "UPDATE t_car set rent=? where id= ? ";
@@ -392,6 +455,30 @@ public class CarDaoImpl extends JDBCTemplate implements ICarDao {
             }
         });
         return 1;
+    }
+
+    @Override
+    public Car queryCarIdbyCarnumber(String carNumber) {
+        final Car car = new Car();
+        String sql = "SELECT id from t_car where car_number=?"
+                ;
+        query(sql, new PreparedStatementSetter() {
+            @Override
+            public void setValues(PreparedStatement pstmt) throws SQLException {
+                pstmt.setString(1,carNumber);
+            }
+        }, new ResultSetHandler() {
+
+            @Override
+            public void handleRs(ResultSet rs) throws SQLException {
+                while (rs.next()) {
+                    car.setId(rs.getLong(1));
+
+                }
+
+            }
+        });
+        return car;
     }
 
     @Override

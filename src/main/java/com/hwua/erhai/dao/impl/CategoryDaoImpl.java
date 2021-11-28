@@ -47,7 +47,7 @@ public class CategoryDaoImpl extends JDBCTemplate implements ICategoryDao {
     @Override
     public Category queryCategorybyCategoryName(String CategoryName) {
         Category category=new Category();
-        String sql = "SELECT id,name FROM t_category where id=?";
+        String sql = "SELECT id,name FROM t_category where name=?";
         query(sql, new PreparedStatementSetter() {
             @Override
             public void setValues(PreparedStatement pstmt) throws SQLException {
