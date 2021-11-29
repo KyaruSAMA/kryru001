@@ -222,16 +222,17 @@ public class CarService implements ICarService {
 
     @Override
     public Car addAndReturnCar(Car car) {
+        List<QueryCondition>conditions=new ArrayList<>();
     List<Brand>brandList=brandDao.queryAllBrand();
         boolean exist =false;
         boolean newbrand=true;
         boolean newcategory=true;
-//        for (Car c:carDao.queryAllCars(null)){
-//            if (c.getCarNumber().equals(car.getCarNumber())){
-//                exist=true;
-//                break;
-//            }
-//        }
+        for (Car c:carDao.queryAllCars(conditions)){
+            if (c.getCarNumber().equals(car.getCarNumber())){
+                exist=true;
+                break;
+            }
+        }
         for (Brand b:brandList){
             if (b.getName().equals(car.getBrandName())){
                car.setBrandId((int)b.getId());
@@ -270,9 +271,9 @@ public class CarService implements ICarService {
 
 
         }
-//        if (exist){
-//            throw new RuntimeException(String.format("车牌号：[%d] 已存在",car.getCarNumber()));
-//        }
+        if (exist){
+            throw new RuntimeException(String.format("车牌号：[%s] 已存在",car.getCarNumber()));
+        }
         //TODO:brandId和categoryId需要通过分别根据brandname和categoryname从数据库里查询得到。
         //之后将这两个id设置到car对象里即可
         carDao.addCar(car);
@@ -283,15 +284,16 @@ public class CarService implements ICarService {
     @Override
     public Car updateAndReturnCar(Car car) {
         List<Brand>brandList=brandDao.queryAllBrand();
+        List<QueryCondition>conditions=new ArrayList<>();
         boolean exist =false;
         boolean newbrand=true;
         boolean newcategory=true;
-//        for (Car c:carDao.queryAllCars(null)){
-//            if (c.getCarNumber().equals(car.getCarNumber())){
-//                exist=true;
-//                break;
-//            }
-//        }
+        for (Car c:carDao.queryAllCars(conditions)){
+            if (c.getCarNumber().equals(car.getCarNumber())){
+                exist=true;
+                break;
+            }
+        }
         for (Brand b:brandList){
             if (b.getName().equals(car.getBrandName())){
                 car.setBrandId((int)b.getId());
@@ -330,9 +332,9 @@ public class CarService implements ICarService {
 
 
         }
-//        if (exist){
-//            throw new RuntimeException(String.format("车牌号：[%d] 已存在",car.getCarNumber()));
-//        }
+        if (exist){
+            throw new RuntimeException(String.format("车牌号：[%s] 已存在",car.getCarNumber()));
+        }
         //TODO:brandId和categoryId需要通过分别根据brandname和categoryname从数据库里查询得到。
         //之后将这两个id设置到car对象里即可
         carDao.updateCar(car);

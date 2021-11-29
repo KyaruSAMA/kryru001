@@ -2,6 +2,7 @@ package com.hwua.erhai.controller;
 
 import com.google.common.base.Preconditions;
 import com.hwua.erhai.entity.User;
+import com.hwua.erhai.model.MUser;
 import com.hwua.erhai.servlet.IUserService;
 import com.hwua.erhai.servlet.impl.UserService;
 import org.apache.commons.fileupload.FileItem;
@@ -110,6 +111,9 @@ public class DoRegisterServlet extends HttpServlet {
             user.setAddr(addr);
             user.setType("管理员".equals(type)?1:0);
             User newUser= userService.register(user);
+
+
+
             if (newUser==null){
                 throw new Exception("注册失败");
             }else{
@@ -124,7 +128,19 @@ public class DoRegisterServlet extends HttpServlet {
                     //保存文件到硬盘
                     imageItem.write(storeFile);
                 }
+
             }
+//            User user1=userService.login(newUser.getUserName(), newUser.getPassword());
+//            MUser mUser=new MUser();
+//            mUser.setId(String.valueOf(user1.getId()));
+//            mUser.setUsername(String.valueOf(user1.getUserName()));
+//            mUser.setPassword(String.valueOf(user1.getPassword()));
+//            mUser.setSex(String.valueOf(user1.getSex()));
+//            mUser.setIdNumber(String.valueOf(user1.getIdNumber()));
+//            mUser.setTel(String.valueOf(user1.getTel()));
+//            mUser.setAddr(String.valueOf(user1.getAddr()));
+//            mUser.setType(user1.getType()==1?"管理员":"普通用户");
+//            session.setAttribute("mUser",mUser);
             session.setAttribute("result","succeed");
             session.setAttribute("message","注册成功");
         } catch (Exception ex) {
@@ -134,6 +150,7 @@ public class DoRegisterServlet extends HttpServlet {
         //跳转到message.jsp
 //        request.getServletContext().getRequestDispatcher("/doCarAdd.jsp").forward(request,response);
 //response.sendRedirect(String.format("doCarAdd.jsp?result=%s",result));
+
         response.sendRedirect("doRegister.jsp");
     }
 }

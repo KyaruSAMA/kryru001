@@ -109,7 +109,7 @@ public class UserService implements IUserService {
         if (exist){
             throw new RuntimeException(String.format("user id[%d] 已存在",user.getId()));
         }if (exist1){
-            throw new RuntimeException(String.format("username[%s] 已存在",user.getId()));
+            throw new RuntimeException(String.format("username[%s] 已存在",user.getUserName()));
         }
         //TODO:brandId和categoryId需要通过分别根据brandname和categoryname从数据库里查询得到。
         //之后将这两个id设置到car对象里即可

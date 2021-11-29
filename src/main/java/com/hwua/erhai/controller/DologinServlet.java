@@ -56,6 +56,7 @@ request.setCharacterEncoding("UTF-8");
         mUser.setTel(String.valueOf(user.getTel()));
         mUser.setAddr(String.valueOf(user.getAddr()));
         mUser.setType(user.getType()==1?"管理员":"普通用户");
+        mUser.setImagePath(String.format("upload/user_%d.img",user.getId()));
 
         session.setAttribute("mUser",mUser);
         response.sendRedirect("carList");

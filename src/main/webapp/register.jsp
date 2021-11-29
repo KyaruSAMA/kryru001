@@ -36,18 +36,16 @@
         </div>
     </div>
     <div class="row clearfix" id="body" style="display: flex;flex-direction: row;min-height: 600px">
-        <jsp:include page="left.jsp">
-            <jsp:param name="navItem" value="userAdd"/>
-        </jsp:include>
-        <div class="col-md-10 column" id="content">
+
+        <div class="col-md-12 column" id="content">
             <div class="row clearfix">
                 <div class="col-md-12 column" id="search" style="background-color: lightskyblue;
                         height: 50px;display: flex;flex-direction: column;justify-content: center;text-align: center">
-                    <h3>新增用户</h3>
+                    <h3>注册用户</h3>
                 </div>
             </div>
-            <div class="row clearfix">
-                <div class="col-md-12 column" id="main" style="padding: 0;display: flex;justify-content: center">
+            <div class="row clearfix"style="background-image: url('image/⑨.jpeg')">
+                <div class="col-md-12 column" id="main" style="padding: 0;display: flex;justify-content: center " >
                     <form role="form" action="doRegister" method="post" enctype="multipart/form-data"
                           style="width: 50%;margin-top: 20px">
                         <div class="form-group">

@@ -59,7 +59,7 @@
 
             </div>
             <div style="display: flex;flex-direction: row;justify-content: flex-end;margin-top: 20px">
-                <a href="login" class="btn btn-primary" role="button" style="margin-left: 20px">
+                <a href="login.jsp" class="btn btn-primary" role="button" style="margin-left: 20px">
                     返回登录界面
                 </a>
             </div>

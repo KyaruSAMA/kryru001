@@ -113,7 +113,7 @@
         <jsp:include page="left.jsp">
             <jsp:param name="navItem" value="carAdd"/>
         </jsp:include>
-        <div class="col-md-10 column" id="content">
+        <div class="col-md-10 column" id="content"style="background-image:url('image/kyaru6.gif');background-size: 120%">
             <div class="row clearfix">
                 <div class="col-md-12 column" id="search" style="background-color: lightskyblue;
                         height: 50px;display: flex;flex-direction: column;justify-content: center;text-align: center">

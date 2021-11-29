@@ -131,6 +131,8 @@ public class UserDaoImpl extends JDBCTemplate implements IUserDao {
                 otherCondetions.append(String.format(" WHERE username = '%s'",condition.getValue()));
             }else if ("userId".equals(condition.getField())){
                 otherCondetions.append(String.format(" WHERE id = '%s'",condition.getValue()));
+            }else if ("Type".equals(condition.getField())){
+                otherCondetions.append(String.format(" WHERE type = '%s'",condition.getValue()));
             }
         }
 
