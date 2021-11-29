@@ -169,8 +169,8 @@ public class MockUserService implements IUserService {
     }
 
     @Override
-    public boolean register(User user) {
-        return false;
+    public User register(User user) {
+        return user;
     }
 
     @Override

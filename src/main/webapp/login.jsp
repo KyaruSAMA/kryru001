@@ -59,9 +59,9 @@
             </div>
 
             <div style="display: flex;justify-content: space-between">
-                <button type="submit" class="btn btn-default">注册</button>
-                <button type="reset" class="btn btn-default" >重置</button>
-                <button type="submit" class="btn btn-primary ">提交</button>
+                <a href="register"> <button type="button" style="width: 80px;height: 34px" class="btn btn-default">注册</button></a>
+                <button type="reset" class="btn btn-default" >重新输入</button>
+                <button type="submit" class="btn btn-primary ">登录</button>
             </div>
 
         </form>

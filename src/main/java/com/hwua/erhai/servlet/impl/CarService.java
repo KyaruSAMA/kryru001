@@ -17,11 +17,15 @@ import com.hwua.erhai.jdbc.DBUtil;
 import com.hwua.erhai.jdbc.ResultSetHandler;
 import com.hwua.erhai.servlet.ICarService;
 import com.hwua.erhai.servlet.query.QueryCondition;
+import com.hwua.erhai.util.Util;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -97,12 +101,103 @@ public class CarService implements ICarService {
 
     @Override
     public Record rentCar(long userId, long carId) {
-        return null;
+        Connection conn = ConnectionFactory.getConnection();
+        Record record = null;
+        long id;
+        try {
+            // 一次成功的租车，涉及修改汽车表和租车记录表这两张独立的表，
+            // 所以需要启动事务来保证要么两者同时修改成功，要么两者同时不做修改（也就是失败后回滚）
+            // 启动本次连接的事务功能
+            conn.setAutoCommit(false);
+            // 查询当前汽车是否可租赁
+            Car car = carDao.queryCarById(conn, carId);
+            if (car != null && car.getStatus() == 0 && car.getUsable() == 0) {
+                // 如果可以租赁，修改汽车表
+                int rows = carDao.updateCar(conn, carId, 1, 0);
+                if (rows == 1) {// 返回修改的记录行数为1，说明修改汽车成功
+                    // 添加记录
+                    id = recordDao.addRecord(conn, userId, carId);
+                    record = recordDao.queryRecordById(conn, id);
+                } else {
+                    throw new Exception(String.format("carDao.updateCar failed, carId[%s]", carId));
+                }
+            }
+            // 提交事务
+            conn.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                // 如果修改汽车表和租车记录表时发生异常，就回滚事务
+                conn.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+        } finally {
+            // 关闭连接
+            DBUtil.close(conn);
+        }
+        return record;
     }
 
     @Override
     public Record returnCar(long userId, long carId) {
-        return null;
+        Connection conn = ConnectionFactory.getConnection();
+        Record record = null;
+        long id;
+        try {
+            // 一次成功的租车，涉及修改汽车表和租车记录表这两张独立的表，
+            // 所以需要启动事务来保证要么两者同时修改成功，要么两者同时不做修改（也就是失败后回滚）
+            // 启动本次连接的事务功能
+            conn.setAutoCommit(false);
+            // 查询当前汽车是否可租赁
+            Car car = carDao.queryCarById(conn, carId);
+            if (car != null && car.getStatus() == 1 && car.getUsable() == 0) {
+                Car car1 = carDao.queryCarById(conn,carId);
+                Record record1 = recordDao.queryNotReturnRecord(conn,userId,carId);
+                int row = 0;
+                if (record1.getCarId() == car.getId()) {
+                    row = carDao.updateCar(conn, record1.getCarId(), 0, 1);
+                    if (row == 1) {
+                        DateFormat dft = new SimpleDateFormat("yyyy-MM-dd");
+                        String returnDate = Util.today();
+                        String startDate = record1.getStartDate();
+                        Date star = dft.parse(startDate);
+                        Date endDay = dft.parse(returnDate);
+                        long starTime = star.getTime();
+                        long endTime = endDay.getTime();
+                        long num = endTime - starTime;
+                        long day = num / 24 / 60 / 60 / 1000;
+                        double payment;
+                        double payment1;
+                        payment = day * car1.getRent();
+                        payment1=1*car1.getRent();
+                        if (day<=1){ recordDao.updateRecord(conn, record1.getId(), returnDate, payment1);}
+                        else {recordDao.updateRecord(conn, record1.getId(), returnDate, payment);}
+                        record = recordDao.queryRecordById(conn, record1.getId());
+
+                    } else {
+                        throw new Exception(String.format("carDao.updateCar failed, carId[%s]", carId));
+                    }
+
+                }
+
+            }
+
+            // 提交事务
+            conn.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                // 如果修改汽车表和租车记录表时发生异常，就回滚事务
+                conn.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+        } finally {
+            // 关闭连接
+            DBUtil.close(conn);
+        }
+        return record;
     }
 
     @Override

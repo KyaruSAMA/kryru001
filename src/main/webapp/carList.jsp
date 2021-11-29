@@ -143,8 +143,13 @@
                                     </td>
                                 </c:if>
                                 <td><a href="carDetail?carId=${mCar.id}">详情</a></td>
-                                <td>${mCar.status}</td>
-                                <td><a href="#">租车</a></td>
+                                <c:if test='${"是".equals(mCar.status)}'>
+                                    <td><a href="carDetail?carId=${mCar.id}">租车</a></td>
+                                </c:if>
+                                <c:if test='${"否".equals(mCar.status)}'>
+                                    <td>暂不可租</td>
+                                </c:if>
+                                <td><a href="doRentCar?carId=${mCar.id}">租车</a></td>
                             </tr>
                         </c:forEach>
                         </tbody>

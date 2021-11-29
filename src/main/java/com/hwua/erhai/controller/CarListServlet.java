@@ -91,7 +91,7 @@ public class CarListServlet extends HttpServlet {
             mCar.setCategory(String.valueOf(car.getCategoryName()));
             mCar.setRent(String.format("%.2f/天",car.getRent()));
             mCar.setUsable(car.getUsable()==0?"是":"否");
-            mCar.setStatus(car.getUsable()==0?"是":"否");
+            mCar.setStatus(car.getStatus()==0?"是":"否");
             mCars.add(mCar);
 
         }

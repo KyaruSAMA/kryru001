@@ -7,6 +7,7 @@ import com.hwua.erhai.model.MUser;
 import com.hwua.erhai.model.MUserSearch;
 import com.hwua.erhai.servlet.IUserService;
 import com.hwua.erhai.servlet.impl.MockUserService;
+import com.hwua.erhai.servlet.impl.UserService;
 import com.hwua.erhai.servlet.query.QueryCondition;
 import org.apache.commons.lang3.StringUtils;
 
@@ -19,7 +20,7 @@ import java.util.List;
 
 @WebServlet(name = "MyListServlet", value = "/myList")
 public class MyListServlet extends HttpServlet {
-    IUserService userService=new MockUserService();
+    IUserService userService=new UserService();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             //从客户端请求里读取出与汽车查询条件相关的参数

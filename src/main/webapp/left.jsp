@@ -15,7 +15,7 @@
         <li class="${"rentList".equals(param.navItem)?"active":""}"><a href="rentList">租车记录</a></li>
 
 
-        <li class="${"rentManage".equals(param.navItem)?"active":""}"><a href="rentManage">租车管理</a></li>
+        <li class="${"rentManage".equals(param.navItem)?"active":""}"><a href="rentCar.jsp">租车管理</a></li>
         <c:choose>
             <c:when test='${"管理员".equals(sessionScope.mUser.type)}'>
                 <li class="${"userList".equals(param.navItem)?"active":""}"><a href="userList">用户列表</a></li>

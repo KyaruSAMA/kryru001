@@ -5,15 +5,24 @@ import com.hwua.erhai.model.MUser;
 import com.hwua.erhai.servlet.IUserService;
 import com.hwua.erhai.servlet.impl.MockUserService;
 import com.hwua.erhai.servlet.impl.UserService;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
+import java.io.File;
 import java.io.IOException;
 
 @WebServlet(name = "LoginServlet", value = "/doLogin")
 public class DologinServlet extends HttpServlet {
     IUserService userService=new UserService();
+    //上传文件储存目录
+    private static final String UpLOAD_DIRECTORY="upload";
+    //上传配置
+    private static final  int MEMORY_THRESHOLD=1024*1024*3;//3mb
+    private static final int MAX_FILE_SIZE=1024*1024*40;
+    private static final int MAX_REQUEST_SIZE=1024*1024*50;
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -21,7 +30,9 @@ public class DologinServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-            String username=request.getParameter("username");
+request.setCharacterEncoding("UTF-8");
+        String username=request.getParameter("username");
+
             String password=request.getParameter("password");
 
             HttpSession session=request.getSession();

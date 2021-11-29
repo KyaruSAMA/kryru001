@@ -93,8 +93,29 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public boolean register(User user) {
-        return false;
+    public User register(User user) {
+        List<QueryCondition>conditions=new ArrayList<>();
+        boolean exist =false;
+        boolean exist1=false;
+        for (User u:userDao.queryUser(conditions)){
+            if (u.getId()==user.getId()){
+                exist=true;
+                break;
+            }else if (u.getUserName().equals(user.getUserName())){
+                exist1=true;
+                break;
+            }
+        }
+        if (exist){
+            throw new RuntimeException(String.format("user id[%d] 已存在",user.getId()));
+        }if (exist1){
+            throw new RuntimeException(String.format("username[%s] 已存在",user.getId()));
+        }
+        //TODO:brandId和categoryId需要通过分别根据brandname和categoryname从数据库里查询得到。
+        //之后将这两个id设置到car对象里即可
+        userDao.addUser(user);
+        user.setId(userDao.queryUser(user.getUserName()).getId());
+        return user;
     }
 
     @Override

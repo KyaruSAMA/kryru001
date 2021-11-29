@@ -30,7 +30,7 @@ public class F01_loginFilter implements Filter {
         String path=url.substring(ctxPath.length());
         if (path.equals("/")||path.startsWith("/index")||
         path.startsWith("/login")||path.startsWith("/doLogin")||
-        path.startsWith("/static")){
+        path.startsWith("/static")||path.startsWith("/register")||path.startsWith("/doRegister")){
             chain.doFilter(request, response);
             return;
         }

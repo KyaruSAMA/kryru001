@@ -28,7 +28,7 @@ public interface IUserService {
      * @param user 注册的用户信息
      * @return 是否注册成功 true:成功  false:失败
      */
-    boolean register(User user);
+    User register(User user);
     User updateAndReturnCar(User user);
     int deleteUser(long userId);
 

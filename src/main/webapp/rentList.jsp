@@ -103,7 +103,7 @@
                                 <td><a href="carDetail?carId=${mRecord.carId}">详情</a></td>
                                 <c:choose>
                                 <c:when test='${"否".equals(mRecord.status)}'>
-                                <td><a href="doReturnCar?carId=${mRecord.carId}">还车</a></td>
+                                <td><a href="returnCar?carId=${mRecord.carId}">还车</a></td>
                                 </c:when>
                                 <c:when test='${"是".equals(mRecord.status)}'>
                                     <td>已还车</td>
