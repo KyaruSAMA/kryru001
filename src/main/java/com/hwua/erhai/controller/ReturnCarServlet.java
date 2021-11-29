@@ -21,6 +21,7 @@ public class ReturnCarServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         MUser mUser =(MUser)session.getAttribute("mUser");
+
         String id = mUser.getId();
         Record record = carService.returnCar(Long.parseLong(id), Long.parseLong(carId));
 

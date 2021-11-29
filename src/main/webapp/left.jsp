@@ -16,15 +16,12 @@
 
 
         <li class="${"rentManage".equals(param.navItem)?"active":""}"><a href="rentCar.jsp">租车管理</a></li>
-        <c:choose>
-            <c:when test='${"管理员".equals(sessionScope.mUser.type)}'>
+<c:if test='${"管理员".equals(sessionScope.mUser.type)}'>
                 <li class="${"userList".equals(param.navItem)?"active":""}"><a href="userList">用户列表</a></li>
-            </c:when>
-            <c:otherwise>
+</c:if>
                 <li class="${"myList".equals(param.navItem)?"active":""}"><a href="myList">我的账户</a></li>
 
-            </c:otherwise>
-        </c:choose>
+
 
         <c:if test='${"管理员".equals(sessionScope.mUser.type)}'>
         <li class="${"userAdd".equals(param.navItem)?"active":""}"><a href="userAdd">用户管理</a></li>
