@@ -83,6 +83,7 @@ public interface ICarService {
 
     Car addAndReturnCar(Car car);
     Car updateAndReturnCar(Car car);
+    Car updateusableAndReturnCar(Car car);
     /**
      * 修改汽车
      *

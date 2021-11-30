@@ -44,8 +44,8 @@
                     <h3>注册用户</h3>
                 </div>
             </div>
-            <div class="row clearfix"style="background-image: url('image/⑨.jpeg')">
-                <div class="col-md-12 column" id="main" style="padding: 0;display: flex;justify-content: center " >
+            <div class="row clearfix"style="background-image: url('static/image/7.jpg')">
+                <div class="col-md-12 column" id="main" style="padding: 0;display: flex;justify-content: center;background-image: url('/static/image/7.jpg') " >
                     <form role="form" action="doRegister" method="post" enctype="multipart/form-data"
                           style="width: 50%;margin-top: 20px">
                         <div class="form-group">

@@ -61,7 +61,7 @@ public class DoCarUpdateUsableServlet extends HttpServlet {
         }
         Car car=carList.get(0);
         car.setUsable("是".equals(usable)?0:1);
-        Car newcar=CarService.updateAndReturnCar(car);
+        Car newcar=CarService.updateusableAndReturnCar(car);
         if (newcar==null){
             response.setStatus(HttpServletResponse.SC_SERVICE_UNAVAILABLE);
             response.getWriter().write("服务器内部错误，更新汽车上下架状态失败");

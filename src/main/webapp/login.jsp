@@ -35,7 +35,7 @@
         }
     </style>
 </head>
-<body style="background-image:url('image/111.jpg')">
+<body style="background-image:url('static/image/111.jpg')">
 <div class="container" id="container" style="width: 100%;">
     <div class="row clearfix" id="head">
         <div class="col-md-12 column" style="line-height:100px;text-align:center;

@@ -283,6 +283,7 @@ public class CarDaoImpl extends JDBCTemplate implements ICarDao {
 
             }
         });
+//        if (Long.parseLong(car.getIdam())==null)
         return car;
     }
 

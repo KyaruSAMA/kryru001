@@ -363,6 +363,11 @@ return cars;
     }
 
     @Override
+    public Car updateusableAndReturnCar(Car car) {
+        return null;
+    }
+
+    @Override
     public boolean updateCar(String type, String value, long carId) {
         return false;
     }

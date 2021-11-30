@@ -51,7 +51,7 @@
         二嗨租车
     </div>
     <div class="col-lg-2" style="background: lightseagreen;height: 100px ;text-align: right">
-        <div class="right">
+        <div class="right"style="text-align: right">
             <ul class="nav navbar-nav">
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle"
@@ -113,7 +113,7 @@
         <jsp:include page="left.jsp">
             <jsp:param name="navItem" value="carAdd"/>
         </jsp:include>
-        <div class="col-md-10 column" id="content"style="background-image:url('image/kyaru6.gif');background-size: 120%">
+        <div class="col-md-10 column" id="content"style="background-image:url('static/image/kyaru11.gif');background-size: 100%">
             <div class="row clearfix">
                 <div class="col-md-12 column" id="search" style="background-color: lightskyblue;
                         height: 50px;display: flex;flex-direction: column;justify-content: center;text-align: center">
@@ -133,7 +133,7 @@
                         <div class="form-group" style="display: flex;justify-content: flex-end">
                             <button class="btn btn-default" type="reset">重置
                             </button>
-                            <button class="btn btn-primary" type="submit" style="margin-left: 30px">提交
+                            <button class="btn btn-primary" type="submit" style="margin-left: 30px">租车
                             </button>
                         </div>
                     </form>
